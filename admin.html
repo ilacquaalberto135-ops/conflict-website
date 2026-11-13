@@ -50,8 +50,14 @@
     <!-- ADMIN DASHBOARD (Hidden until logged in) -->
     <div id="dashboard-view" class="hidden w-full max-w-4xl bg-brand-card p-8 border border-brand-border rounded-sm my-8">
         <div class="flex justify-between items-center mb-8 pb-4 border-b border-brand-border">
-            <h2 class="text-xl font-black uppercase tracking-widest text-white">Newsroom Editor</h2>
-            <button id="logout-btn" class="text-xs font-bold uppercase tracking-wider text-brand-text/60 hover:text-brand-accent transition-colors">Sign Out</button>
+            <div>
+                <h2 class="text-xl font-black uppercase tracking-widest text-white">Newsroom Editor</h2>
+                <p class="text-xs text-brand-text/50 mt-1">Publish new briefs or manage existing dockets</p>
+            </div>
+            <div class="flex items-center space-x-4">
+                <a href="index.html" class="text-xs font-bold uppercase tracking-wider text-brand-accent hover:text-white transition-colors">View Live Site &rarr;</a>
+                <button id="logout-btn" class="text-xs font-bold uppercase tracking-wider text-brand-text/60 hover:text-brand-accent transition-colors border border-brand-border px-3 py-1.5 rounded-sm">Sign Out</button>
+            </div>
         </div>
 
         <form id="publish-form" class="space-y-6">
@@ -59,7 +65,24 @@
                 <label class="block text-xs font-bold text-brand-text/70 uppercase tracking-wider mb-1">Headline</label>
                 <input type="text" id="article-title" required placeholder="e.g., The Zero-Sum Game of AI Regulation" class="w-full px-4 py-3 bg-brand-bg border border-brand-border rounded-sm focus:outline-none focus:border-brand-accent text-white font-serif text-lg">
             </div>
+
+            <!-- Author & Credentials Row -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <div>
+                    <label class="block text-xs font-bold text-brand-text/70 uppercase tracking-wider mb-1">Author Name</label>
+                    <input type="text" id="article-author" required placeholder="e.g., Clara Vance" class="w-full px-4 py-3 bg-brand-bg border border-brand-border rounded-sm focus:outline-none focus:border-brand-accent text-white text-sm">
+                </div>
+                <div>
+                    <label class="block text-xs font-bold text-brand-text/70 uppercase tracking-wider mb-1">Author Credentials / Desk</label>
+                    <input type="text" id="article-role" placeholder="e.g., LL.M. Candidate, Brussels Desk" class="w-full px-4 py-3 bg-brand-bg border border-brand-border rounded-sm focus:outline-none focus:border-brand-accent text-white text-sm">
+                </div>
+                <div>
+                    <label class="block text-xs font-bold text-brand-text/70 uppercase tracking-wider mb-1">Estimated Read Time</label>
+                    <input type="text" id="article-readtime" placeholder="e.g., 6 Min Read" class="w-full px-4 py-3 bg-brand-bg border border-brand-border rounded-sm focus:outline-none focus:border-brand-accent text-white text-sm">
+                </div>
+            </div>
             
+            <!-- Category & Region Row -->
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div>
                     <label class="block text-xs font-bold text-brand-text/70 uppercase tracking-wider mb-1">Topic Category</label>
@@ -84,12 +107,12 @@
 
             <div>
                 <label class="block text-xs font-bold text-brand-text/70 uppercase tracking-wider mb-1">Cover Image URL</label>
-                <input type="url" id="article-image" placeholder="https://placehold.co/1200x800" class="w-full px-4 py-3 bg-brand-bg border border-brand-border rounded-sm focus:outline-none focus:border-brand-accent text-white text-sm">
+                <input type="url" id="article-image" placeholder="https://images.unsplash.com/..." class="w-full px-4 py-3 bg-brand-bg border border-brand-border rounded-sm focus:outline-none focus:border-brand-accent text-white text-sm">
             </div>
 
             <div>
                 <label class="block text-xs font-bold text-brand-text/70 uppercase tracking-wider mb-1">Article Content</label>
-                <textarea id="article-content" required rows="12" placeholder="Write your analysis here. Separate paragraphs by hitting 'Enter' twice." class="w-full px-4 py-3 bg-brand-bg border border-brand-border rounded-sm focus:outline-none focus:border-brand-accent text-white font-serif leading-relaxed"></textarea>
+                <textarea id="article-content" required rows="12" placeholder="Write your analysis here. Separate paragraphs by hitting 'Enter' twice. Start a paragraph with '>' to create a styled pull-quote." class="w-full px-4 py-3 bg-brand-bg border border-brand-border rounded-sm focus:outline-none focus:border-brand-accent text-white font-serif leading-relaxed"></textarea>
             </div>
 
             <button type="submit" id="publish-btn" class="w-full bg-brand-accent hover:bg-red-700 text-white font-bold uppercase tracking-wider py-5 rounded-sm transition-colors text-lg">
@@ -97,14 +120,29 @@
             </button>
             <p id="publish-success" class="text-green-500 text-sm font-bold text-center hidden mt-4 uppercase tracking-widest">Article Published Successfully!</p>
         </form>
+
+        <!-- MANAGE / DELETE ARTICLES SECTION -->
+        <div class="mt-14 pt-8 border-t border-brand-border">
+            <div class="flex items-center justify-between mb-6">
+                <div>
+                    <h3 class="text-sm font-black uppercase tracking-widest text-white">Manage Published Dockets</h3>
+                    <p class="text-xs text-brand-text/50 mt-1">Articles published via Firebase can be permanently removed here.</p>
+                </div>
+                <button id="refresh-list-btn" class="text-xs font-bold uppercase tracking-widest text-brand-accent hover:text-white transition-colors">Refresh List</button>
+            </div>
+            
+            <div id="manage-articles-list" class="space-y-3">
+                <p class="text-xs text-brand-text/50 italic">Loading published articles...</p>
+            </div>
+        </div>
     </div>
 
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
         import { getAuth, signInWithEmailAndPassword, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
-        import { getFirestore, collection, addDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+        import { getFirestore, collection, addDoc, getDocs, deleteDoc, doc, query, orderBy, serverTimestamp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
 
-        // YOUR NEW FIREBASE CONFIGURATION
+        // YOUR FIREBASE CONFIGURATION
         const firebaseConfig = {
             apiKey: "AIzaSyD_RTuc2UWLdY1alYIepeXImkvCjjh2tP0",
             authDomain: "conflict-of-interest-14ba9.firebaseapp.com",
@@ -127,12 +165,71 @@
         const publishForm = document.getElementById('publish-form');
         const publishSuccess = document.getElementById('publish-success');
         const publishBtn = document.getElementById('publish-btn');
+        const manageList = document.getElementById('manage-articles-list');
+
+        // Load Published Articles for Deletion/Management
+        async function loadManageArticles() {
+            if (!auth.currentUser) return;
+            manageList.innerHTML = '<p class="text-xs text-brand-text/50 italic">Loading published articles...</p>';
+            try {
+                const q = query(collection(db, 'articles'), orderBy('createdAt', 'desc'));
+                const snapshot = await getDocs(q);
+                manageList.innerHTML = '';
+
+                if (snapshot.empty) {
+                    manageList.innerHTML = '<p class="text-xs text-brand-text/50 italic">No custom articles published yet.</p>';
+                    return;
+                }
+
+                snapshot.forEach(documentSnapshot => {
+                    const data = documentSnapshot.data();
+                    const item = document.createElement('div');
+                    item.className = "flex items-center justify-between p-4 bg-brand-bg border border-brand-border rounded-sm";
+                    item.innerHTML = `
+                        <div class="pr-4">
+                            <h4 class="font-serif font-bold text-white text-sm">${data.title}</h4>
+                            <p class="text-[11px] text-brand-text/50 uppercase tracking-wider mt-1">
+                                By <span class="text-brand-text/80">${data.author || 'Editorial Desk'}</span> &bull; ${data.category}
+                            </p>
+                        </div>
+                        <button data-id="${documentSnapshot.id}" class="delete-article-btn bg-red-950/60 hover:bg-brand-accent text-red-300 hover:text-white border border-red-800/60 text-[10px] font-bold uppercase tracking-widest px-3 py-2 rounded-sm transition-colors shrink-0">
+                            Delete
+                        </button>
+                    `;
+                    manageList.appendChild(item);
+                });
+
+                // Attach Delete Event Listeners
+                document.querySelectorAll('.delete-article-btn').forEach(btn => {
+                    btn.addEventListener('click', async (e) => {
+                        const id = e.currentTarget.getAttribute('data-id');
+                        if (confirm("Are you sure you want to permanently delete this article from the live website?")) {
+                            e.currentTarget.textContent = "Deleting...";
+                            e.currentTarget.disabled = true;
+                            try {
+                                await deleteDoc(doc(db, 'articles', id));
+                                loadManageArticles();
+                            } catch (err) {
+                                alert("Error deleting article: " + err.message);
+                                e.currentTarget.textContent = "Delete";
+                                e.currentTarget.disabled = false;
+                            }
+                        }
+                    });
+                });
+            } catch (err) {
+                manageList.innerHTML = `<p class="text-xs text-brand-accent">Error loading list: ${err.message}</p>`;
+            }
+        }
+
+        document.getElementById('refresh-list-btn').addEventListener('click', loadManageArticles);
 
         // Check if already logged in
         onAuthStateChanged(auth, (user) => {
             if (user) {
                 loginView.classList.add('hidden');
                 dashboardView.classList.remove('hidden');
+                loadManageArticles();
             } else {
                 loginView.classList.remove('hidden');
                 dashboardView.classList.add('hidden');
@@ -172,26 +269,30 @@
             publishBtn.disabled = true;
 
             const title = document.getElementById('article-title').value;
+            const author = document.getElementById('article-author').value.trim() || "Editorial Desk";
+            const authorRole = document.getElementById('article-role').value.trim() || "Verified Academic & Policy Analysis";
+            const readTime = document.getElementById('article-readtime').value.trim() || "5 Min Read";
             const topic = document.getElementById('article-topic').value;
             const region = document.getElementById('article-region').value;
             const image = document.getElementById('article-image').value || "https://placehold.co/1200x800/27272A/DC2626?text=Conflict+Of+Interest";
             const content = document.getElementById('article-content').value;
-            const categories = region ? `${topic} ${region}` : topic;
+            const categories = region ? `${topic} • ${region}` : topic;
 
             try {
-                // Save to real database "articles" collection
                 await addDoc(collection(db, 'articles'), {
                     title: title,
+                    author: author,
+                    authorRole: authorRole,
                     category: categories,
                     imageUrl: image,
                     content: content,
-                    author: "The Editor",
-                    readTime: "5 Min Read",
+                    readTime: readTime,
                     createdAt: serverTimestamp()
                 });
                 
                 publishSuccess.classList.remove('hidden');
                 publishForm.reset();
+                loadManageArticles();
                 setTimeout(() => publishSuccess.classList.add('hidden'), 4000);
             } catch (error) {
                 alert("Error publishing: " + error.message);
