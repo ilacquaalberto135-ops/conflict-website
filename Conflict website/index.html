@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Newsroom Admin | Conflict of Interest</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;900&family=Merriweather:wght@400;700&display=swap" rel="stylesheet">
+    <title>Conflict of Interest | Independent Global Analysis</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&family=Merriweather:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = {
@@ -18,93 +18,461 @@
     </script>
     <style>
         body { background-color: theme('colors.brand.bg'); color: theme('colors.brand.text'); }
+        .drop-cap::first-letter {
+            float: left;
+            font-size: 4.5rem;
+            line-height: 0.85;
+            padding-top: 4px;
+            padding-right: 12px;
+            padding-bottom: 4px;
+            font-family: 'Merriweather', serif;
+            font-weight: 700;
+            color: #DC2626;
+        }
+        .article-card { transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); }
+        .article-card:hover { transform: translateY(-4px); box-shadow: 0 10px 30px -10px rgba(220, 38, 38, 0.15); border-color: #DC2626; }
+        blockquote { border-left: 4px solid #DC2626; padding-left: 1.5rem; font-style: italic; color: #A1A1AA; margin: 2rem 0; }
     </style>
 </head>
-<body class="font-sans antialiased min-h-screen flex flex-col items-center justify-center p-4">
+<body class="font-sans antialiased min-h-screen flex flex-col selection:bg-brand-accent selection:text-white">
 
-    <!-- LOGIN SCREEN -->
-    <div id="login-view" class="w-full max-w-md bg-brand-card p-8 border border-brand-border rounded-sm shadow-2xl">
-        <div class="text-center mb-8">
-            <h1 class="uppercase font-black tracking-tighter leading-[0.85] text-3xl mb-2">
-                <span class="text-white">Conflict</span><br><span class="text-brand-accent">Of Interest</span>
-            </h1>
-            <p class="text-xs text-brand-text/50 uppercase tracking-widest font-bold mt-4">Restricted Access Newsroom</p>
-        </div>
-        
-        <form id="login-form" class="space-y-4">
-            <div>
-                <label class="block text-xs font-bold text-brand-text/70 uppercase tracking-wider mb-1">Admin Email</label>
-                <input type="email" id="admin-email" required class="w-full px-4 py-3 bg-brand-bg border border-brand-border rounded-sm focus:outline-none focus:border-brand-accent text-white">
-            </div>
-            <div>
-                <label class="block text-xs font-bold text-brand-text/70 uppercase tracking-wider mb-1">Password</label>
-                <input type="password" id="admin-password" required class="w-full px-4 py-3 bg-brand-bg border border-brand-border rounded-sm focus:outline-none focus:border-brand-accent text-white">
-            </div>
-            <button type="submit" id="login-btn" class="w-full bg-brand-accent hover:bg-red-700 text-white font-bold uppercase tracking-wider py-4 rounded-sm transition-colors mt-4">
-                Authenticate
-            </button>
-            <p id="login-error" class="text-brand-accent text-xs font-bold text-center hidden mt-2"></p>
-        </form>
+    <!-- Reading Progress Bar -->
+    <div id="progress-container" class="fixed top-0 left-0 w-full h-1 bg-brand-border z-50 hidden">
+        <div id="progress-bar" class="h-full bg-brand-accent w-0 transition-all duration-150"></div>
     </div>
 
-    <!-- ADMIN DASHBOARD (Hidden until logged in) -->
-    <div id="dashboard-view" class="hidden w-full max-w-4xl bg-brand-card p-8 border border-brand-border rounded-sm my-8">
-        <div class="flex justify-between items-center mb-8 pb-4 border-b border-brand-border">
-            <h2 class="text-xl font-black uppercase tracking-widest text-white">Newsroom Editor</h2>
-            <button id="logout-btn" class="text-xs font-bold uppercase tracking-wider text-brand-text/60 hover:text-brand-accent transition-colors">Sign Out</button>
-        </div>
-
-        <form id="publish-form" class="space-y-6">
-            <div>
-                <label class="block text-xs font-bold text-brand-text/70 uppercase tracking-wider mb-1">Headline</label>
-                <input type="text" id="article-title" required placeholder="e.g., The Zero-Sum Game of AI Regulation" class="w-full px-4 py-3 bg-brand-bg border border-brand-border rounded-sm focus:outline-none focus:border-brand-accent text-white font-serif text-lg">
-            </div>
+    <!-- Sticky Navigation -->
+    <header class="sticky top-0 z-40 bg-brand-bg/90 backdrop-blur-md border-b border-brand-border">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
             
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <div>
-                    <label class="block text-xs font-bold text-brand-text/70 uppercase tracking-wider mb-1">Topic Category</label>
-                    <select id="article-topic" required class="w-full px-4 py-3 bg-brand-bg border border-brand-border rounded-sm focus:outline-none focus:border-brand-accent text-white appearance-none">
-                        <option value="Law">Law</option>
-                        <option value="Tech">Tech</option>
-                        <option value="Politics">Politics</option>
-                        <option value="Economy">Economy</option>
-                    </select>
+            <!-- Left: Dropdown Filter & Links -->
+            <div class="flex items-center space-x-6">
+                <div class="relative" id="dropdown-container">
+                    <button id="dropdown-btn" class="flex items-center space-x-2 text-xs font-bold uppercase tracking-widest text-brand-text hover:text-brand-accent transition-colors py-2">
+                        <span id="current-filter">All Dockets</span>
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                    </button>
+                    
+                    <!-- Dropdown Menu -->
+                    <div id="dropdown-menu" class="hidden absolute left-0 mt-2 w-48 bg-brand-card border border-brand-border rounded-sm shadow-2xl py-2 z-50">
+                        <div class="px-4 py-1 text-[10px] font-black uppercase tracking-widest text-brand-text/40">Topics</div>
+                        <a href="#" data-filter="all" class="filter-item block px-4 py-2 text-xs font-bold uppercase tracking-wider text-white hover:bg-brand-accent transition-colors">All Briefs</a>
+                        <a href="#" data-filter="Law" class="filter-item block px-4 py-2 text-xs font-bold uppercase tracking-wider text-brand-text/80 hover:bg-brand-accent hover:text-white transition-colors">Law</a>
+                        <a href="#" data-filter="Tech" class="filter-item block px-4 py-2 text-xs font-bold uppercase tracking-wider text-brand-text/80 hover:bg-brand-accent hover:text-white transition-colors">Tech</a>
+                        <a href="#" data-filter="Politics" class="filter-item block px-4 py-2 text-xs font-bold uppercase tracking-wider text-brand-text/80 hover:bg-brand-accent hover:text-white transition-colors">Politics</a>
+                        <a href="#" data-filter="Economy" class="filter-item block px-4 py-2 text-xs font-bold uppercase tracking-wider text-brand-text/80 hover:bg-brand-accent hover:text-white transition-colors">Economy</a>
+                        
+                        <div class="border-t border-brand-border my-2"></div>
+                        <div class="px-4 py-1 text-[10px] font-black uppercase tracking-widest text-brand-text/40">Regions</div>
+                        <a href="#" data-filter="EU" class="filter-item block px-4 py-2 text-xs font-bold uppercase tracking-wider text-brand-text/80 hover:bg-brand-accent hover:text-white transition-colors">European Union</a>
+                        <a href="#" data-filter="UK" class="filter-item block px-4 py-2 text-xs font-bold uppercase tracking-wider text-brand-text/80 hover:bg-brand-accent hover:text-white transition-colors">United Kingdom</a>
+                        <a href="#" data-filter="USA" class="filter-item block px-4 py-2 text-xs font-bold uppercase tracking-wider text-brand-text/80 hover:bg-brand-accent hover:text-white transition-colors">United States</a>
+                        <a href="#" data-filter="ASIA" class="filter-item block px-4 py-2 text-xs font-bold uppercase tracking-wider text-brand-text/80 hover:bg-brand-accent hover:text-white transition-colors">Asia-Pacific</a>
+                    </div>
                 </div>
-                <div>
-                    <label class="block text-xs font-bold text-brand-text/70 uppercase tracking-wider mb-1">Region Category</label>
-                    <select id="article-region" class="w-full px-4 py-3 bg-brand-bg border border-brand-border rounded-sm focus:outline-none focus:border-brand-accent text-white appearance-none">
-                        <option value="">Global / None</option>
-                        <option value="EU">EU</option>
-                        <option value="UK">UK</option>
-                        <option value="USA">USA</option>
-                        <option value="ASIA">ASIA</option>
-                    </select>
-                </div>
+
+                <a href="#" id="nav-about" class="text-xs font-bold uppercase tracking-widest text-brand-text/70 hover:text-white transition-colors hidden sm:inline-block">About Us</a>
             </div>
 
+            <!-- Center: Brand Logo -->
+            <a href="#" id="brand-logo" class="text-center group">
+                <h1 class="uppercase font-black tracking-tighter leading-[0.85] text-2xl sm:text-3xl">
+                    <span class="text-white group-hover:text-brand-text transition-colors">Conflict</span><br>
+                    <span class="text-brand-accent">Of Interest</span>
+                </h1>
+            </a>
+
+            <!-- Right: Subscribe / Auth -->
             <div>
-                <label class="block text-xs font-bold text-brand-text/70 uppercase tracking-wider mb-1">Cover Image URL</label>
-                <input type="url" id="article-image" placeholder="https://placehold.co/1200x800" class="w-full px-4 py-3 bg-brand-bg border border-brand-border rounded-sm focus:outline-none focus:border-brand-accent text-white text-sm">
+                <a href="#subscribe-section" id="header-sub-btn" class="bg-brand-accent hover:bg-red-700 text-white text-xs font-bold uppercase tracking-wider px-4 py-2.5 rounded-sm transition-colors">
+                    Subscribe
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <!-- MAIN CONTENT AREA -->
+    <main class="flex-grow max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-12">
+
+        <!-- VIEW 1: HOME FEED -->
+        <div id="home-view">
+            <!-- Featured Article -->
+            <div id="featured-container" class="mb-16">
+                <article data-category="Tech EU Law" class="article-card bg-brand-card border border-brand-border rounded-sm overflow-hidden grid grid-cols-1 lg:grid-cols-12 cursor-pointer" onclick="openArticle('The Brussels Effect: How EU AI Regulation Shapes Silicon Valley', 'Tech • EU', '6 Min Read', 'https://images.unsplash.com/photo-1541872703-74c5e44368f9?auto=format&fit=crop&w=1200&q=80', 'The regulatory apparatus of the European Union has long operated as the de facto global standard-bearer for digital rights and corporate accountability. With the formal implementation of the Artificial Intelligence Act, Brussels is once again testing the limits of its extraterritorial reach.\n\nFor technology giants headquartered in California, compliance is not merely a regional cost of doing business—it is an architectural mandate. Engineering teams rarely build fractured codebases for separate jurisdictions when the underlying infrastructure relies on unified foundation models.\n\n> We are not regulating technology; we are establishing the constitutional parameters for algorithmic governance in the twenty-first century.\n\nHowever, this regulatory ambition creates an immediate friction with domestic innovation policy. Startups across Berlin, Paris, and Amsterdam warn that stringent compliance tiers disproportionately favor entrenched American incumbents who possess the legal capital to absorb regulatory shocks.')">
+                    <div class="lg:col-span-7 bg-zinc-900 min-h-[300px] lg:min-h-[450px] relative overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1541872703-74c5e44368f9?auto=format&fit=crop&w=1200&q=80" alt="EU Parliament" class="w-full h-full object-cover opacity-80 hover:scale-105 transition-transform duration-700">
+                        <div class="absolute top-4 left-4 bg-brand-accent text-white text-[10px] font-black uppercase tracking-widest px-3 py-1">Featured Brief</div>
+                    </div>
+                    <div class="lg:col-span-5 p-8 lg:p-12 flex flex-col justify-between">
+                        <div>
+                            <div class="flex items-center space-x-2 text-xs font-bold uppercase tracking-widest text-brand-accent mb-4">
+                                <span>Tech • EU</span>
+                                <span>&bull;</span>
+                                <span class="text-brand-text/50">6 Min Read</span>
+                            </div>
+                            <h2 class="font-serif text-2xl sm:text-3xl font-bold text-white leading-tight mb-4">
+                                The Brussels Effect: How EU AI Regulation Shapes Silicon Valley
+                            </h2>
+                            <p class="text-brand-text/70 text-sm leading-relaxed mb-6">
+                                An examination of extraterritorial legal frameworks and why American foundation models are being forced to adapt to European compliance architecture.
+                            </p>
+                        </div>
+                        <div class="flex items-center space-x-3 pt-6 border-t border-brand-border">
+                            <div class="w-8 h-8 rounded-full bg-brand-accent flex items-center justify-center text-white font-bold text-xs">ED</div>
+                            <div>
+                                <div class="text-xs font-bold text-white uppercase tracking-wider">Editorial Board</div>
+                                <div class="text-[10px] text-brand-text/50 uppercase tracking-widest">Brussels Desk</div>
+                            </div>
+                        </div>
+                    </div>
+                </article>
             </div>
 
-            <div>
-                <label class="block text-xs font-bold text-brand-text/70 uppercase tracking-wider mb-1">Article Content</label>
-                <textarea id="article-content" required rows="12" placeholder="Write your analysis here. Separate paragraphs by hitting 'Enter' twice." class="w-full px-4 py-3 bg-brand-bg border border-brand-border rounded-sm focus:outline-none focus:border-brand-accent text-white font-serif leading-relaxed"></textarea>
+            <div class="flex items-center justify-between mb-8 pb-4 border-b border-brand-border">
+                <h3 class="text-sm font-black uppercase tracking-widest text-white">Latest Dockets & Briefs</h3>
+                <span id="article-count" class="text-xs font-bold uppercase tracking-widest text-brand-text/50">Showing All</span>
             </div>
 
-            <button type="submit" id="publish-btn" class="w-full bg-brand-accent hover:bg-red-700 text-white font-bold uppercase tracking-wider py-5 rounded-sm transition-colors text-lg">
-                Publish to Live Site
+            <!-- Dynamic & Static Articles Grid -->
+            <div id="articles-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                
+                <!-- Static Card 1 -->
+                <article data-category="Law USA" class="article-card bg-brand-card border border-brand-border rounded-sm overflow-hidden flex flex-col justify-between cursor-pointer" onclick="openArticle('Antitrust Revived: The DOJ Takes Aim at Digital Monopolies', 'Law • USA', '5 Min Read', 'https://images.unsplash.com/photo-1589829545856-d10d557cf95f?auto=format&fit=crop&w=800&q=80', 'For four decades, the consumer welfare standard insulated silicon titans from structural breakup. As long as digital services remained ostensibly free to the end user, federal regulators struggled to prove economic harm in federal court.\n\nThat consensus has officially fractured. Recent filings by the Department of Justice and the Federal Trade Commission signal a return to Neo-Brandeisian legal theory, focusing on market structure, gatekeeper power, and the suppression of nascent competitors.')">
+                    <div>
+                        <div class="h-48 bg-zinc-900 overflow-hidden relative">
+                            <img src="https://images.unsplash.com/photo-1589829545856-d10d557cf95f?auto=format&fit=crop&w=800&q=80" alt="Gavel and Books" class="w-full h-full object-cover opacity-80">
+                        </div>
+                        <div class="p-6">
+                            <div class="flex items-center space-x-2 text-[10px] font-bold uppercase tracking-widest text-brand-accent mb-3">
+                                <span>Law • USA</span>
+                                <span>&bull;</span>
+                                <span class="text-brand-text/50">5 Min Read</span>
+                            </div>
+                            <h4 class="font-serif text-xl font-bold text-white leading-snug mb-3">
+                                Antitrust Revived: The DOJ Takes Aim at Digital Monopolies
+                            </h4>
+                            <p class="text-brand-text/60 text-xs leading-relaxed">
+                                Moving beyond the consumer welfare standard: how Neo-Brandeisian legal scholars are reshaping federal enforcement in Washington.
+                            </p>
+                        </div>
+                    </div>
+                    <div class="px-6 py-4 border-t border-brand-border flex items-center justify-between text-[11px] font-bold uppercase tracking-wider text-brand-text/50">
+                        <span>By Legal Desk</span>
+                        <span class="text-brand-accent">Read Brief &rarr;</span>
+                    </div>
+                </article>
+
+                <!-- Static Card 2 -->
+                <article data-category="Economy ASIA" class="article-card bg-brand-card border border-brand-border rounded-sm overflow-hidden flex flex-col justify-between cursor-pointer" onclick="openArticle('Semiconductor Sovereignty and the East Asian Supply Chain', 'Economy • ASIA', '7 Min Read', 'https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=800&q=80', 'The global economy runs on silicon etched at nanometer scales in a handful of fabrication plants across the Taiwan Strait and South Korea. As geopolitical tensions escalate, industrial policy has superseded free-market orthodoxy.\n\nMassive state subsidies in the United States, Japan, and the European Union aim to onshore critical foundry capacity, yet the intricate ecosystem of specialized chemical suppliers and lithography equipment remains stubbornly resistant to rapid duplication.')">
+                    <div>
+                        <div class="h-48 bg-zinc-900 overflow-hidden relative">
+                            <img src="https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=800&q=80" alt="Microchip" class="w-full h-full object-cover opacity-80">
+                        </div>
+                        <div class="p-6">
+                            <div class="flex items-center space-x-2 text-[10px] font-bold uppercase tracking-widest text-brand-accent mb-3">
+                                <span>Economy • ASIA</span>
+                                <span>&bull;</span>
+                                <span class="text-brand-text/50">7 Min Read</span>
+                            </div>
+                            <h4 class="font-serif text-xl font-bold text-white leading-snug mb-3">
+                                Semiconductor Sovereignty and the East Asian Supply Chain
+                            </h4>
+                            <p class="text-brand-text/60 text-xs leading-relaxed">
+                                Industrial policy returns to the forefront as nations race to subsidize domestic chip fabrication and insulate against geopolitical shocks.
+                            </p>
+                        </div>
+                    </div>
+                    <div class="px-6 py-4 border-t border-brand-border flex items-center justify-between text-[11px] font-bold uppercase tracking-wider text-brand-text/50">
+                        <span>By Markets Desk</span>
+                        <span class="text-brand-accent">Read Brief &rarr;</span>
+                    </div>
+                </article>
+
+                <!-- Static Card 3 -->
+                <article data-category="Politics UK" class="article-card bg-brand-card border border-brand-border rounded-sm overflow-hidden flex flex-col justify-between cursor-pointer" onclick="openArticle('Post-Brexit Financial Divergence: The City of London’s Next Act', 'Politics • UK', '4 Min Read', 'https://images.unsplash.com/photo-1513635269975-59663e0ac1ad?auto=format&fit=crop&w=800&q=80', 'Years after formal withdrawal from the European single market, Westminster continues to navigate the delicate balance between regulatory autonomy and market access.\n\nThe Edinburgh Reforms represent a concerted effort to strip back continental capital requirements, yet institutional investors remain cautious about divergence that increases compliance friction across the English Channel.')">
+                    <div>
+                        <div class="h-48 bg-zinc-900 overflow-hidden relative">
+                            <img src="https://images.unsplash.com/photo-1513635269975-59663e0ac1ad?auto=format&fit=crop&w=800&q=80" alt="London" class="w-full h-full object-cover opacity-80">
+                        </div>
+                        <div class="p-6">
+                            <div class="flex items-center space-x-2 text-[10px] font-bold uppercase tracking-widest text-brand-accent mb-3">
+                                <span>Politics • UK</span>
+                                <span>&bull;</span>
+                                <span class="text-brand-text/50">4 Min Read</span>
+                            </div>
+                            <h4 class="font-serif text-xl font-bold text-white leading-snug mb-3">
+                                Post-Brexit Financial Divergence: The City of London’s Next Act
+                            </h4>
+                            <p class="text-brand-text/60 text-xs leading-relaxed">
+                                Assessing the impact of the Edinburgh Reforms and whether regulatory deregulation can restore capital market competitiveness.
+                            </p>
+                        </div>
+                    </div>
+                    <div class="px-6 py-4 border-t border-brand-border flex items-center justify-between text-[11px] font-bold uppercase tracking-wider text-brand-text/50">
+                        <span>By Whitehall Desk</span>
+                        <span class="text-brand-accent">Read Brief &rarr;</span>
+                    </div>
+                </article>
+
+            </div>
+        </div>
+
+        <!-- VIEW 2: SINGLE ARTICLE READER (Hidden by default) -->
+        <div id="article-view" class="hidden max-w-3xl mx-auto py-6">
+            <button id="back-to-home" class="flex items-center space-x-2 text-xs font-bold uppercase tracking-widest text-brand-accent hover:text-white transition-colors mb-8">
+                <span>&larr; Back to All Briefs</span>
             </button>
-            <p id="publish-success" class="text-green-500 text-sm font-bold text-center hidden mt-4 uppercase tracking-widest">Article Published Successfully!</p>
-        </form>
-    </div>
 
+            <div class="flex items-center space-x-2 text-xs font-bold uppercase tracking-widest text-brand-accent mb-4">
+                <span id="reader-category">Category</span>
+                <span>&bull;</span>
+                <span id="reader-time" class="text-brand-text/50">5 Min Read</span>
+            </div>
+
+            <h1 id="reader-title" class="font-serif text-3xl sm:text-5xl font-bold text-white leading-tight mb-8">
+                Article Title
+            </h1>
+
+            <div class="flex items-center space-x-3 pb-8 mb-8 border-b border-brand-border">
+                <div class="w-10 h-10 rounded-full bg-brand-accent flex items-center justify-center text-white font-bold text-sm">CI</div>
+                <div>
+                    <div class="text-xs font-bold text-white uppercase tracking-wider">Conflict of Interest Contributors</div>
+                    <div class="text-[11px] text-brand-text/50 uppercase tracking-widest">Verified Academic & Policy Analysis</div>
+                </div>
+            </div>
+
+            <div class="mb-10 bg-zinc-900 rounded-sm overflow-hidden border border-brand-border">
+                <img id="reader-image" src="" alt="Article Cover" class="w-full max-h-[450px] object-cover">
+            </div>
+
+            <div id="reader-content" class="font-serif text-lg text-brand-text/90 leading-relaxed space-y-6">
+                <!-- Content injected via JS -->
+            </div>
+        </div>
+
+        <!-- VIEW 3: ABOUT US PAGE (Hidden by default) -->
+        <div id="about-view" class="hidden max-w-4xl mx-auto py-8">
+            <button id="back-from-about" class="flex items-center space-x-2 text-xs font-bold uppercase tracking-widest text-brand-accent hover:text-white transition-colors mb-8">
+                <span>&larr; Return to Front Page</span>
+            </button>
+
+            <div class="bg-brand-card border border-brand-border p-8 sm:p-14 rounded-sm">
+                <div class="text-xs font-black uppercase tracking-widest text-brand-accent mb-3">Our Mandate & Structure</div>
+                <h1 class="font-serif text-3xl sm:text-5xl font-bold text-white leading-tight mb-8">
+                    Uncompromised Analysis. Zero Commercial Bias.
+                </h1>
+
+                <div class="font-serif text-brand-text/80 space-y-6 leading-relaxed text-base sm:text-lg">
+                    <p class="drop-cap">
+                        Conflict of Interest is an independent, non-profit digital publication dedicated to rigorous analysis at the intersection of law, technology, politics, and global economics. In an era where media ecosystems are increasingly captured by corporate sponsorship and algorithmic outrage, we operate on a radically different foundational premise: expertise over clicks.
+                    </p>
+                    <p>
+                        Our newsroom is uniquely structured as an international collective. Every brief, docket analysis, and essay published on this platform is authored by advanced university students, legal researchers, and credentialed graduates holding degrees directly within the fields they cover. From antitrust law in Washington to regulatory frameworks in Brussels and supply chain economics in East Asia, our contributors write from the frontlines of academic and policy research.
+                    </p>
+                    <blockquote>
+                        "True objectivity requires structural independence. As a registered non-profit initiative, we answer to neither shareholders nor political action committees—only to the evidentiary standard of our research."
+                    </blockquote>
+                    <p>
+                        By bridging the gap between dense academic journals and rapid-fire breaking news, Conflict of Interest provides readers with institutional-grade briefings that clarify the hidden mechanics of global power.
+                    </p>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mt-12 pt-12 border-t border-brand-border font-sans">
+                    <div>
+                        <h4 class="text-xs font-black uppercase tracking-widest text-white mb-2">100% Non-Profit</h4>
+                        <p class="text-xs text-brand-text/60 leading-relaxed">No paywalls, no venture capital mandates, and zero commercial advertising interference.</p>
+                    </div>
+                    <div>
+                        <h4 class="text-xs font-black uppercase tracking-widest text-white mb-2">Credentialed Contributors</h4>
+                        <p class="text-xs text-brand-text/60 leading-relaxed">Written exclusively by degree-holders and specialized university researchers in law, economics, and policy.</p>
+                    </div>
+                    <div>
+                        <h4 class="text-xs font-black uppercase tracking-widest text-white mb-2">Global Perspective</h4>
+                        <p class="text-xs text-brand-text/60 leading-relaxed">Decentralized editorial desks covering the EU, UK, USA, and Asia-Pacific jurisdictions.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- SUBSCRIBE / AUTHENTICATION SECTION -->
+        <section id="subscribe-section" class="mt-24 bg-brand-card border border-brand-border rounded-sm p-8 sm:p-12 max-w-3xl mx-auto">
+            <div id="sub-form-container">
+                <div class="text-center mb-8">
+                    <span class="text-[10px] font-black uppercase tracking-widest text-brand-accent px-3 py-1 bg-brand-accent/10 border border-brand-accent/30 rounded-sm">Encrypted Reader Access</span>
+                    <h3 class="font-serif text-2xl sm:text-3xl font-bold text-white mt-4 mb-2">Subscribe to the Docket</h3>
+                    <p class="text-xs text-brand-text/60 max-w-md mx-auto">Create a secure reader account to receive our weekly global briefings and unlock member-only policy dossiers.</p>
+                </div>
+
+                <form id="subscribe-form" class="space-y-4 max-w-md mx-auto">
+                    <div>
+                        <label class="block text-[10px] font-bold uppercase tracking-widest text-brand-text/70 mb-1">Email Address</label>
+                        <input type="email" id="sub-email" required placeholder="researcher@university.edu" class="w-full px-4 py-3 bg-brand-bg border border-brand-border rounded-sm text-white text-sm focus:outline-none focus:border-brand-accent">
+                    </div>
+                    <div>
+                        <label class="block text-[10px] font-bold uppercase tracking-widest text-brand-text/70 mb-1">Create Password (Min. 6 Characters)</label>
+                        <input type="password" id="sub-password" required minlength="6" placeholder="••••••••" class="w-full px-4 py-3 bg-brand-bg border border-brand-border rounded-sm text-white text-sm focus:outline-none focus:border-brand-accent">
+                    </div>
+                    <button type="submit" id="sub-submit-btn" class="w-full bg-brand-accent hover:bg-red-700 text-white font-bold uppercase tracking-widest text-xs py-4 rounded-sm transition-colors">
+                        Register & Subscribe
+                    </button>
+                    <p id="sub-error" class="text-brand-accent text-xs font-bold text-center hidden mt-2"></p>
+                </form>
+            </div>
+
+            <!-- Shown when logged in -->
+            <div id="sub-success-container" class="hidden text-center py-6">
+                <div class="w-12 h-12 rounded-full bg-green-500/20 border border-green-500 text-green-400 flex items-center justify-center mx-auto mb-4 font-bold">✓</div>
+                <h4 class="font-serif text-2xl font-bold text-white mb-2">Reader Access Granted</h4>
+                <p id="logged-in-email" class="text-xs text-brand-text/60 uppercase tracking-widest mb-6"></p>
+                <button id="sign-out-btn" class="text-xs font-bold uppercase tracking-widest text-brand-accent hover:text-white border border-brand-accent px-6 py-2.5 rounded-sm transition-colors">
+                    Sign Out
+                </button>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-zinc-950 border-t border-brand-border mt-24 py-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 md:grid-cols-4 gap-8">
+            <div class="md:col-span-2">
+                <h2 class="uppercase font-black tracking-tighter leading-[0.85] text-xl mb-4">
+                    <span class="text-white">Conflict</span> <span class="text-brand-accent">Of Interest</span>
+                </h2>
+                <p class="text-xs text-brand-text/50 max-w-sm leading-relaxed mb-4">
+                    An independent, non-profit journal run by students and degree-holding researchers worldwide. Dedicated to uncompromised analysis of law, tech, politics, and the economy.
+                </p>
+                <p class="text-[10px] text-brand-text/40 uppercase tracking-widest">&copy; 2026 Conflict of Interest Non-Profit Collective. All rights reserved.</p>
+            </div>
+            <div>
+                <h4 class="text-xs font-black uppercase tracking-widest text-white mb-4">Navigation</h4>
+                <ul class="space-y-2 text-xs text-brand-text/60">
+                    <li><a href="#" onclick="showHome()" class="hover:text-brand-accent transition-colors">Front Page</a></li>
+                    <li><a href="#" onclick="showAbout()" class="hover:text-brand-accent transition-colors">About the Collective</a></li>
+                    <li><a href="admin.html" class="hover:text-brand-accent transition-colors">Contributor Newsroom (Admin)</a></li>
+                </ul>
+            </div>
+            <div>
+                <h4 class="text-xs font-black uppercase tracking-widest text-white mb-4">Legal & Ethics</h4>
+                <ul class="space-y-2 text-xs text-brand-text/60">
+                    <li><span class="text-brand-text/40">Non-Profit Charter</span></li>
+                    <li><span class="text-brand-text/40">Editorial Independence Policy</span></li>
+                    <li><span class="text-brand-text/40">Privacy & GDPR</span></li>
+                </ul>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Interactive UI & SPA Router Script -->
+    <script>
+        const homeView = document.getElementById('home-view');
+        const articleView = document.getElementById('article-view');
+        const aboutView = document.getElementById('about-view');
+        const progressContainer = document.getElementById('progress-container');
+        const progressBar = document.getElementById('progress-bar');
+
+        function showHome() {
+            homeView.classList.remove('hidden');
+            articleView.classList.add('hidden');
+            aboutView.classList.add('hidden');
+            progressContainer.classList.add('hidden');
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function showAbout() {
+            homeView.classList.add('hidden');
+            articleView.classList.add('hidden');
+            aboutView.classList.remove('hidden');
+            progressContainer.classList.add('hidden');
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        window.openArticle = function(title, category, readTime, imageUrl, content) {
+            document.getElementById('reader-title').textContent = title;
+            document.getElementById('reader-category').textContent = category;
+            document.getElementById('reader-time').textContent = readTime;
+            document.getElementById('reader-image').src = imageUrl;
+
+            const contentContainer = document.getElementById('reader-content');
+            contentContainer.innerHTML = '';
+            const paragraphs = content.split('\n\n');
+            paragraphs.forEach((p, index) => {
+                if (p.trim().startsWith('>')) {
+                    const bq = document.createElement('blockquote');
+                    bq.textContent = p.replace('>', '').trim();
+                    contentContainer.appendChild(bq);
+                } else {
+                    const para = document.createElement('p');
+                    if (index === 0) para.classList.add('drop-cap');
+                    para.textContent = p.trim();
+                    contentContainer.appendChild(para);
+                }
+            });
+
+            homeView.classList.add('hidden');
+            aboutView.classList.add('hidden');
+            articleView.classList.remove('hidden');
+            progressContainer.classList.remove('hidden');
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        };
+
+        document.getElementById('brand-logo').addEventListener('click', (e) => { e.preventDefault(); showHome(); });
+        document.getElementById('back-to-home').addEventListener('click', (e) => { e.preventDefault(); showHome(); });
+        document.getElementById('nav-about').addEventListener('click', (e) => { e.preventDefault(); showAbout(); });
+        document.getElementById('back-from-about').addEventListener('click', (e) => { e.preventDefault(); showHome(); });
+
+        // Reading Progress Bar
+        window.addEventListener('scroll', () => {
+            if (!articleView.classList.contains('hidden')) {
+                const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+                const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+                const scrolled = (winScroll / height) * 100;
+                progressBar.style.width = scrolled + "%";
+            }
+        });
+
+        // Dropdown Menu Logic
+        const dropdownBtn = document.getElementById('dropdown-btn');
+        const dropdownMenu = document.getElementById('dropdown-menu');
+        const currentFilter = document.getElementById('current-filter');
+
+        dropdownBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            dropdownMenu.classList.toggle('hidden');
+        });
+
+        document.addEventListener('click', () => dropdownMenu.classList.add('hidden'));
+
+        document.querySelectorAll('.filter-item').forEach(item => {
+            item.addEventListener('click', (e) => {
+                e.preventDefault();
+                showHome();
+                const filter = item.getAttribute('data-filter');
+                currentFilter.textContent = filter === 'all' ? 'All Dockets' : filter;
+                
+                const articles = document.querySelectorAll('article[data-category]');
+                let visibleCount = 0;
+                articles.forEach(article => {
+                    const cats = article.getAttribute('data-category');
+                    if (filter === 'all' || cats.includes(filter)) {
+                        article.classList.remove('hidden');
+                        visibleCount++;
+                    } else {
+                        article.classList.add('hidden');
+                    }
+                });
+                document.getElementById('article-count').textContent = filter === 'all' ? 'Showing All' : `Filtered: ${filter} (${visibleCount})`;
+            });
+        });
+    </script>
+
+    <!-- Firebase Live Database & Auth Script -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
-        import { getAuth, signInWithEmailAndPassword, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
-        import { getFirestore, collection, addDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+        import { getAuth, createUserWithEmailAndPassword, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+        import { getFirestore, collection, getDocs, query, orderBy } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
 
-        // YOUR NEW FIREBASE CONFIGURATION
+        // YOUR REAL FIREBASE CONFIGURATION
         const firebaseConfig = {
             apiKey: "AIzaSyD_RTuc2UWLdY1alYIepeXImkvCjjh2tP0",
             authDomain: "conflict-of-interest-14ba9.firebaseapp.com",
@@ -119,88 +487,91 @@
         const auth = getAuth(app);
         const db = getFirestore(app);
 
-        const loginView = document.getElementById('login-view');
-        const dashboardView = document.getElementById('dashboard-view');
-        const loginForm = document.getElementById('login-form');
-        const loginError = document.getElementById('login-error');
-        const loginBtn = document.getElementById('login-btn');
-        const publishForm = document.getElementById('publish-form');
-        const publishSuccess = document.getElementById('publish-success');
-        const publishBtn = document.getElementById('publish-btn');
+        // Fetch Live Published Articles from Firestore
+        async function loadLiveArticles() {
+            try {
+                const q = query(collection(db, 'articles'), orderBy('createdAt', 'desc'));
+                const snapshot = await getDocs(q);
+                const grid = document.getElementById('articles-grid');
 
-        // Check if already logged in
+                snapshot.forEach(doc => {
+                    const data = doc.data();
+                    const card = document.createElement('article');
+                    card.setAttribute('data-category', data.category || 'Law');
+                    card.className = "article-card bg-brand-card border border-brand-border rounded-sm overflow-hidden flex flex-col justify-between cursor-pointer";
+                    
+                    const excerpt = data.content ? data.content.substring(0, 140) + '...' : '';
+                    const img = data.imageUrl || 'https://placehold.co/800x500/27272A/DC2626?text=Conflict+Of+Interest';
+
+                    card.innerHTML = `
+                        <div>
+                            <div class="h-48 bg-zinc-900 overflow-hidden relative">
+                                <img src="${img}" alt="${data.title}" class="w-full h-full object-cover opacity-80">
+                            </div>
+                            <div class="p-6">
+                                <div class="flex items-center space-x-2 text-[10px] font-bold uppercase tracking-widest text-brand-accent mb-3">
+                                    <span>${data.category}</span>
+                                    <span>&bull;</span>
+                                    <span class="text-brand-text/50">${data.readTime || '5 Min Read'}</span>
+                                </div>
+                                <h4 class="font-serif text-xl font-bold text-white leading-snug mb-3">${data.title}</h4>
+                                <p class="text-brand-text/60 text-xs leading-relaxed">${excerpt}</p>
+                            </div>
+                        </div>
+                        <div class="px-6 py-4 border-t border-brand-border flex items-center justify-between text-[11px] font-bold uppercase tracking-wider text-brand-text/50">
+                            <span>By ${data.author || 'Editorial Desk'}</span>
+                            <span class="text-brand-accent">Read Brief &rarr;</span>
+                        </div>
+                    `;
+
+                    card.addEventListener('click', () => {
+                        window.openArticle(data.title, data.category, data.readTime || '5 Min Read', img, data.content);
+                    });
+
+                    grid.prepend(card);
+                });
+            } catch (err) {
+                console.warn("Could not load live articles yet:", err.message);
+            }
+        }
+
+        loadLiveArticles();
+
+        // Subscriber Auth Logic
+        const subForm = document.getElementById('subscribe-form');
+        const subFormContainer = document.getElementById('sub-form-container');
+        const subSuccessContainer = document.getElementById('sub-success-container');
+        const subError = document.getElementById('sub-error');
+        const headerSubBtn = document.getElementById('header-sub-btn');
+
         onAuthStateChanged(auth, (user) => {
             if (user) {
-                loginView.classList.add('hidden');
-                dashboardView.classList.remove('hidden');
+                subFormContainer.classList.add('hidden');
+                subSuccessContainer.classList.remove('hidden');
+                document.getElementById('logged-in-email').textContent = `Authenticated: ${user.email}`;
+                headerSubBtn.textContent = "Member Active";
             } else {
-                loginView.classList.remove('hidden');
-                dashboardView.classList.add('hidden');
+                subFormContainer.classList.remove('hidden');
+                subSuccessContainer.classList.add('hidden');
+                headerSubBtn.textContent = "Subscribe";
             }
         });
 
-        // Real Email/Password Login
-        loginForm.addEventListener('submit', async (e) => {
+        subForm.addEventListener('submit', async (e) => {
             e.preventDefault();
-            const email = document.getElementById('admin-email').value;
-            const password = document.getElementById('admin-password').value;
-            loginBtn.textContent = "Authenticating...";
-            
-            try {
-                await signInWithEmailAndPassword(auth, email, password);
-                loginError.classList.add('hidden');
-            } catch (error) {
-                loginError.textContent = "Access Denied. Check credentials.";
-                loginError.classList.remove('hidden');
-            } finally {
-                loginBtn.textContent = "Authenticate";
-            }
-        });
-
-        // Logout
-        document.getElementById('logout-btn').addEventListener('click', async () => {
-            await signOut(auth);
-            document.getElementById('admin-password').value = '';
-        });
-
-        // Publish to Database
-        publishForm.addEventListener('submit', async (e) => {
-            e.preventDefault();
-            if (!auth.currentUser) return;
-
-            publishBtn.textContent = "Publishing...";
-            publishBtn.disabled = true;
-
-            const title = document.getElementById('article-title').value;
-            const topic = document.getElementById('article-topic').value;
-            const region = document.getElementById('article-region').value;
-            const image = document.getElementById('article-image').value || "https://placehold.co/1200x800/27272A/DC2626?text=Conflict+Of+Interest";
-            const content = document.getElementById('article-content').value;
-            const categories = region ? `${topic} ${region}` : topic;
+            const email = document.getElementById('sub-email').value;
+            const pass = document.getElementById('sub-password').value;
+            subError.classList.add('hidden');
 
             try {
-                // Save to real database "articles" collection
-                await addDoc(collection(db, 'articles'), {
-                    title: title,
-                    category: categories,
-                    imageUrl: image,
-                    content: content,
-                    author: "The Editor",
-                    readTime: "5 Min Read",
-                    createdAt: serverTimestamp()
-                });
-                
-                publishSuccess.classList.remove('hidden');
-                publishForm.reset();
-                setTimeout(() => publishSuccess.classList.add('hidden'), 4000);
-            } catch (error) {
-                alert("Error publishing: " + error.message);
-                console.error(error);
-            } finally {
-                publishBtn.textContent = "Publish to Live Site";
-                publishBtn.disabled = false;
+                await createUserWithEmailAndPassword(auth, email, pass);
+            } catch (err) {
+                subError.textContent = err.message.replace('Firebase:', '');
+                subError.classList.remove('hidden');
             }
         });
+
+        document.getElementById('sign-out-btn').addEventListener('click', () => signOut(auth));
     </script>
 </body>
 </html>
