@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="dark">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -11,13 +11,25 @@
             theme: {
                 extend: {
                     fontFamily: { sans: ['Inter', 'sans-serif'], serif: ['Merriweather', 'serif'] },
-                    colors: { brand: { bg: '#18181B', text: '#E4E4E7', accent: '#DC2626', card: '#27272A', border: '#3F3F46' } }
+                    colors: { 
+                        brand: { 
+                            bg: '#18181B', 
+                            text: '#FAFAFA', 
+                            muted: '#D4D4D8',
+                            accent: '#DC2626', 
+                            card: '#27272A', 
+                            border: '#3F3F46' 
+                        } 
+                    }
                 }
             }
         }
     </script>
     <style>
-        body { background-color: theme('colors.brand.bg'); color: theme('colors.brand.text'); }
+        html, body { 
+            background-color: #18181B !important; 
+            color: #FAFAFA !important; 
+        }
         .drop-cap::first-letter {
             float: left;
             font-size: 4.5rem;
@@ -30,11 +42,11 @@
             color: #DC2626;
         }
         .article-card { transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); }
-        .article-card:hover { transform: translateY(-4px); box-shadow: 0 10px 30px -10px rgba(220, 38, 38, 0.15); border-color: #DC2626; }
-        blockquote { border-left: 4px solid #DC2626; padding-left: 1.5rem; font-style: italic; color: #A1A1AA; margin: 2rem 0; }
+        .article-card:hover { transform: translateY(-4px); box-shadow: 0 10px 30px -10px rgba(220, 38, 38, 0.2); border-color: #DC2626; }
+        blockquote { border-left: 4px solid #DC2626; padding-left: 1.5rem; font-style: italic; color: #FAFAFA; margin: 2rem 0; background: rgba(255,255,255,0.03); padding-top: 0.75rem; padding-bottom: 0.75rem; }
     </style>
 </head>
-<body class="font-sans antialiased min-h-screen flex flex-col selection:bg-brand-accent selection:text-white">
+<body class="bg-[#18181B] text-[#FAFAFA] font-sans antialiased min-h-screen flex flex-col selection:bg-brand-accent selection:text-white">
 
     <!-- Reading Progress Bar -->
     <div id="progress-container" class="fixed top-0 left-0 w-full h-1 bg-brand-border z-50 hidden">
@@ -42,43 +54,43 @@
     </div>
 
     <!-- Sticky Navigation -->
-    <header class="sticky top-0 z-40 bg-brand-bg/90 backdrop-blur-md border-b border-brand-border">
+    <header class="sticky top-0 z-40 bg-[#18181B]/95 backdrop-blur-md border-b border-brand-border">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
             
             <!-- Left: Dropdown Filter & Links -->
             <div class="flex items-center space-x-6">
                 <div class="relative" id="dropdown-container">
-                    <button id="dropdown-btn" class="flex items-center space-x-2 text-xs font-bold uppercase tracking-widest text-brand-text hover:text-brand-accent transition-colors py-2">
+                    <button id="dropdown-btn" class="flex items-center space-x-2 text-xs font-bold uppercase tracking-widest text-white hover:text-brand-accent transition-colors py-2">
                         <span id="current-filter">All Dockets</span>
                         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
                     </button>
                     
                     <!-- Dropdown Menu -->
-                    <div id="dropdown-menu" class="hidden absolute left-0 mt-2 w-48 bg-brand-card border border-brand-border rounded-sm shadow-2xl py-2 z-50">
-                        <div class="px-4 py-1 text-[10px] font-black uppercase tracking-widest text-brand-text/40">Topics</div>
+                    <div id="dropdown-menu" class="hidden absolute left-0 mt-2 w-48 bg-[#27272A] border border-brand-border rounded-sm shadow-2xl py-2 z-50">
+                        <div class="px-4 py-1 text-[10px] font-black uppercase tracking-widest text-zinc-400">Topics</div>
                         <a href="#" data-filter="all" class="filter-item block px-4 py-2 text-xs font-bold uppercase tracking-wider text-white hover:bg-brand-accent transition-colors">All Briefs</a>
-                        <a href="#" data-filter="Law" class="filter-item block px-4 py-2 text-xs font-bold uppercase tracking-wider text-brand-text/80 hover:bg-brand-accent hover:text-white transition-colors">Law</a>
-                        <a href="#" data-filter="Tech" class="filter-item block px-4 py-2 text-xs font-bold uppercase tracking-wider text-brand-text/80 hover:bg-brand-accent hover:text-white transition-colors">Tech</a>
-                        <a href="#" data-filter="Politics" class="filter-item block px-4 py-2 text-xs font-bold uppercase tracking-wider text-brand-text/80 hover:bg-brand-accent hover:text-white transition-colors">Politics</a>
-                        <a href="#" data-filter="Economy" class="filter-item block px-4 py-2 text-xs font-bold uppercase tracking-wider text-brand-text/80 hover:bg-brand-accent hover:text-white transition-colors">Economy</a>
+                        <a href="#" data-filter="Law" class="filter-item block px-4 py-2 text-xs font-bold uppercase tracking-wider text-zinc-100 hover:bg-brand-accent hover:text-white transition-colors">Law</a>
+                        <a href="#" data-filter="Tech" class="filter-item block px-4 py-2 text-xs font-bold uppercase tracking-wider text-zinc-100 hover:bg-brand-accent hover:text-white transition-colors">Tech</a>
+                        <a href="#" data-filter="Politics" class="filter-item block px-4 py-2 text-xs font-bold uppercase tracking-wider text-zinc-100 hover:bg-brand-accent hover:text-white transition-colors">Politics</a>
+                        <a href="#" data-filter="Economy" class="filter-item block px-4 py-2 text-xs font-bold uppercase tracking-wider text-zinc-100 hover:bg-brand-accent hover:text-white transition-colors">Economy</a>
                         
                         <div class="border-t border-brand-border my-2"></div>
-                        <div class="px-4 py-1 text-[10px] font-black uppercase tracking-widest text-brand-text/40">Regions</div>
-                        <a href="#" data-filter="EU" class="filter-item block px-4 py-2 text-xs font-bold uppercase tracking-wider text-brand-text/80 hover:bg-brand-accent hover:text-white transition-colors">European Union</a>
-                        <a href="#" data-filter="UK" class="filter-item block px-4 py-2 text-xs font-bold uppercase tracking-wider text-brand-text/80 hover:bg-brand-accent hover:text-white transition-colors">United Kingdom</a>
-                        <a href="#" data-filter="USA" class="filter-item block px-4 py-2 text-xs font-bold uppercase tracking-wider text-brand-text/80 hover:bg-brand-accent hover:text-white transition-colors">United States</a>
-                        <a href="#" data-filter="ASIA" class="filter-item block px-4 py-2 text-xs font-bold uppercase tracking-wider text-brand-text/80 hover:bg-brand-accent hover:text-white transition-colors">Asia-Pacific</a>
+                        <div class="px-4 py-1 text-[10px] font-black uppercase tracking-widest text-zinc-400">Regions</div>
+                        <a href="#" data-filter="EU" class="filter-item block px-4 py-2 text-xs font-bold uppercase tracking-wider text-zinc-100 hover:bg-brand-accent hover:text-white transition-colors">European Union</a>
+                        <a href="#" data-filter="UK" class="filter-item block px-4 py-2 text-xs font-bold uppercase tracking-wider text-zinc-100 hover:bg-brand-accent hover:text-white transition-colors">United Kingdom</a>
+                        <a href="#" data-filter="USA" class="filter-item block px-4 py-2 text-xs font-bold uppercase tracking-wider text-zinc-100 hover:bg-brand-accent hover:text-white transition-colors">United States</a>
+                        <a href="#" data-filter="ASIA" class="filter-item block px-4 py-2 text-xs font-bold uppercase tracking-wider text-zinc-100 hover:bg-brand-accent hover:text-white transition-colors">Asia-Pacific</a>
                     </div>
                 </div>
 
-                <a href="#" id="nav-about" class="text-xs font-bold uppercase tracking-widest text-brand-text/70 hover:text-white transition-colors hidden sm:inline-block">About Us</a>
+                <a href="#" id="nav-about" class="text-xs font-bold uppercase tracking-widest text-zinc-100 hover:text-brand-accent transition-colors">About &amp; Writers</a>
             </div>
 
             <!-- Center: Brand Logo -->
             <a href="#" id="brand-logo" class="text-center group">
                 <h1 class="uppercase font-black tracking-tighter leading-[0.85] text-2xl sm:text-3xl">
-                    <span class="text-white group-hover:text-brand-text transition-colors">Conflict</span><br>
-                    <span class="text-brand-accent">Of Interest</span>
+                    <span id="cms-logo-line1" class="text-white group-hover:text-zinc-300 transition-colors">Conflict</span><br>
+                    <span id="cms-logo-line2" class="text-brand-accent">Of Interest</span>
                 </h1>
             </a>
 
@@ -98,118 +110,121 @@
         <div id="home-view">
             <!-- Featured Article -->
             <div id="featured-container" class="mb-16">
-                <article data-category="Tech EU Law" class="article-card bg-brand-card border border-brand-border rounded-sm overflow-hidden grid grid-cols-1 lg:grid-cols-12 cursor-pointer" onclick="openArticle('The Brussels Effect: How EU AI Regulation Shapes Silicon Valley', 'Tech • EU', '6 Min Read', 'https://images.unsplash.com/photo-1541872703-74c5e44368f9?auto=format&fit=crop&w=1200&q=80', 'The regulatory apparatus of the European Union has long operated as the de facto global standard-bearer for digital rights and corporate accountability. With the formal implementation of the Artificial Intelligence Act, Brussels is once again testing the limits of its extraterritorial reach.\n\nFor technology giants headquartered in California, compliance is not merely a regional cost of doing business—it is an architectural mandate. Engineering teams rarely build fractured codebases for separate jurisdictions when the underlying infrastructure relies on unified foundation models.\n\n> We are not regulating technology; we are establishing the constitutional parameters for algorithmic governance in the twenty-first century.\n\nHowever, this regulatory ambition creates an immediate friction with domestic innovation policy. Startups across Berlin, Paris, and Amsterdam warn that stringent compliance tiers disproportionately favor entrenched American incumbents who possess the legal capital to absorb regulatory shocks.', 'Editorial Board', 'Brussels Desk')">
+                <article id="featured-article-card" data-category="Tech EU Law" class="article-card bg-[#27272A] border border-brand-border rounded-sm overflow-hidden grid grid-cols-1 lg:grid-cols-12 cursor-pointer">
                     <div class="lg:col-span-7 bg-zinc-900 min-h-[300px] lg:min-h-[450px] relative overflow-hidden">
-                        <img src="https://images.unsplash.com/photo-1541872703-74c5e44368f9?auto=format&fit=crop&w=1200&q=80" alt="EU Parliament" class="w-full h-full object-cover opacity-80 hover:scale-105 transition-transform duration-700">
-                        <div class="absolute top-4 left-4 bg-brand-accent text-white text-[10px] font-black uppercase tracking-widest px-3 py-1">Featured Brief</div>
+                        <img id="cms-feat-image" src="https://images.unsplash.com/photo-1541872703-74c5e44368f9?auto=format&fit=crop&w=1200&q=80" alt="Featured Cover" class="w-full h-full object-cover opacity-90 hover:scale-105 transition-transform duration-700">
+                        <div id="cms-feat-badge" class="absolute top-4 left-4 bg-brand-accent text-white text-[10px] font-black uppercase tracking-widest px-3 py-1">Featured Brief</div>
                     </div>
                     <div class="lg:col-span-5 p-8 lg:p-12 flex flex-col justify-between">
                         <div>
                             <div class="flex items-center space-x-2 text-xs font-bold uppercase tracking-widest text-brand-accent mb-4">
-                                <span>Tech • EU</span>
+                                <span id="cms-feat-category">Tech • EU</span>
                                 <span>&bull;</span>
-                                <span class="text-brand-text/50">6 Min Read</span>
+                                <span id="cms-feat-readtime" class="text-zinc-200">6 Min Read</span>
                             </div>
-                            <h2 class="font-serif text-2xl sm:text-3xl font-bold text-white leading-tight mb-4">
+                            <h2 id="cms-feat-title" class="font-serif text-2xl sm:text-3xl font-bold text-white leading-tight mb-4">
                                 The Brussels Effect: How EU AI Regulation Shapes Silicon Valley
                             </h2>
-                            <p class="text-brand-text/70 text-sm leading-relaxed mb-6">
+                            <p id="cms-feat-excerpt" class="text-zinc-100 text-sm leading-relaxed mb-6">
                                 An examination of extraterritorial legal frameworks and why American foundation models are being forced to adapt to European compliance architecture.
                             </p>
                         </div>
-                        <div class="flex items-center space-x-3 pt-6 border-t border-brand-border">
-                            <div class="w-8 h-8 rounded-full bg-brand-accent flex items-center justify-center text-white font-bold text-xs">EB</div>
-                            <div>
-                                <div class="text-xs font-bold text-white uppercase tracking-wider">Editorial Board</div>
-                                <div class="text-[10px] text-brand-text/50 uppercase tracking-widest">Brussels Desk</div>
+                        <div class="flex items-center justify-between pt-6 border-t border-brand-border">
+                            <div class="flex items-center space-x-3">
+                                <div id="cms-feat-initials" class="w-8 h-8 rounded-full bg-brand-accent flex items-center justify-center text-white font-bold text-xs">ER</div>
+                                <div>
+                                    <div id="cms-feat-author" class="text-xs font-bold text-white uppercase tracking-wider">Elena Rostova</div>
+                                    <div id="cms-feat-role" class="text-[11px] text-zinc-200 uppercase tracking-widest">LL.M. European Law &bull; Brussels Desk</div>
+                                </div>
                             </div>
+                            <span class="text-xs font-bold text-brand-accent uppercase tracking-wider">Read &rarr;</span>
                         </div>
                     </div>
                 </article>
             </div>
 
             <div class="flex items-center justify-between mb-8 pb-4 border-b border-brand-border">
-                <h3 class="text-sm font-black uppercase tracking-widest text-white">Latest Dockets & Briefs</h3>
-                <span id="article-count" class="text-xs font-bold uppercase tracking-widest text-brand-text/50">Showing All</span>
+                <h3 id="cms-home-grid-heading" class="text-sm font-black uppercase tracking-widest text-white">Latest Dockets &amp; Briefs</h3>
+                <span id="article-count" class="text-xs font-bold uppercase tracking-widest text-zinc-200">Showing All</span>
             </div>
 
             <!-- Dynamic & Static Articles Grid -->
             <div id="articles-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                 
                 <!-- Static Card 1 -->
-                <article data-category="Law USA" class="article-card bg-brand-card border border-brand-border rounded-sm overflow-hidden flex flex-col justify-between cursor-pointer" onclick="openArticle('Antitrust Revived: The DOJ Takes Aim at Digital Monopolies', 'Law • USA', '5 Min Read', 'https://images.unsplash.com/photo-1589829545856-d10d557cf95f?auto=format&fit=crop&w=800&q=80', 'For four decades, the consumer welfare standard insulated silicon titans from structural breakup. As long as digital services remained ostensibly free to the end user, federal regulators struggled to prove economic harm in federal court.\n\nThat consensus has officially fractured. Recent filings by the Department of Justice and the Federal Trade Commission signal a return to Neo-Brandeisian legal theory, focusing on market structure, gatekeeper power, and the suppression of nascent competitors.', 'Legal Desk', 'Washington D.C. Collective')">
+                <article data-category="Law USA" class="static-sample-article article-card bg-[#27272A] border border-brand-border rounded-sm overflow-hidden flex flex-col justify-between cursor-pointer" onclick="openArticle('Antitrust Revived: The DOJ Takes Aim at Digital Monopolies', 'Law • USA', '5 Min Read', 'https://images.unsplash.com/photo-1589829545856-d10d557cf95f?auto=format&fit=crop&w=800&q=80', 'For four decades, the consumer welfare standard insulated silicon titans from structural breakup. As long as digital services remained ostensibly free to the end user, federal regulators struggled to prove economic harm in federal court.\n\nThat consensus has officially fractured. Recent filings by the Department of Justice and the Federal Trade Commission signal a return to Neo-Brandeisian legal theory, focusing on market structure, gatekeeper power, and the suppression of nascent competitors.', 'Marcus Vance', 'J.D. Candidate • Washington D.C. Desk', 'https://www.linkedin.com/')">
                     <div>
                         <div class="h-48 bg-zinc-900 overflow-hidden relative">
-                            <img src="https://images.unsplash.com/photo-1589829545856-d10d557cf95f?auto=format&fit=crop&w=800&q=80" alt="Gavel and Books" class="w-full h-full object-cover opacity-80">
+                            <img src="https://images.unsplash.com/photo-1589829545856-d10d557cf95f?auto=format&fit=crop&w=800&q=80" alt="Gavel and Books" class="w-full h-full object-cover opacity-85">
                         </div>
                         <div class="p-6">
                             <div class="flex items-center space-x-2 text-[10px] font-bold uppercase tracking-widest text-brand-accent mb-3">
                                 <span>Law • USA</span>
                                 <span>&bull;</span>
-                                <span class="text-brand-text/50">5 Min Read</span>
+                                <span class="text-zinc-200">5 Min Read</span>
                             </div>
                             <h4 class="font-serif text-xl font-bold text-white leading-snug mb-3">
                                 Antitrust Revived: The DOJ Takes Aim at Digital Monopolies
                             </h4>
-                            <p class="text-brand-text/60 text-xs leading-relaxed">
+                            <p class="text-zinc-100 text-xs leading-relaxed">
                                 Moving beyond the consumer welfare standard: how Neo-Brandeisian legal scholars are reshaping federal enforcement in Washington.
                             </p>
                         </div>
                     </div>
-                    <div class="px-6 py-4 border-t border-brand-border flex items-center justify-between text-[11px] font-bold uppercase tracking-wider text-brand-text/50">
-                        <span>By Legal Desk</span>
+                    <div class="px-6 py-4 border-t border-brand-border flex items-center justify-between text-[11px] font-bold uppercase tracking-wider text-zinc-100">
+                        <span>By Marcus Vance</span>
                         <span class="text-brand-accent">Read Brief &rarr;</span>
                     </div>
                 </article>
 
                 <!-- Static Card 2 -->
-                <article data-category="Economy ASIA" class="article-card bg-brand-card border border-brand-border rounded-sm overflow-hidden flex flex-col justify-between cursor-pointer" onclick="openArticle('Semiconductor Sovereignty and the East Asian Supply Chain', 'Economy • ASIA', '7 Min Read', 'https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=800&q=80', 'The global economy runs on silicon etched at nanometer scales in a handful of fabrication plants across the Taiwan Strait and South Korea. As geopolitical tensions escalate, industrial policy has superseded free-market orthodoxy.\n\nMassive state subsidies in the United States, Japan, and the European Union aim to onshore critical foundry capacity, yet the intricate ecosystem of specialized chemical suppliers and lithography equipment remains stubbornly resistant to rapid duplication.', 'Markets Desk', 'East Asia Policy Group')">
+                <article data-category="Economy ASIA" class="static-sample-article article-card bg-[#27272A] border border-brand-border rounded-sm overflow-hidden flex flex-col justify-between cursor-pointer" onclick="openArticle('Semiconductor Sovereignty and the East Asian Supply Chain', 'Economy • ASIA', '7 Min Read', 'https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=800&q=80', 'The global economy runs on silicon etched at nanometer scales in a handful of fabrication plants across the Taiwan Strait and South Korea. As geopolitical tensions escalate, industrial policy has superseded free-market orthodoxy.\n\nMassive state subsidies in the United States, Japan, and the European Union aim to onshore critical foundry capacity, yet the intricate ecosystem of specialized chemical suppliers and lithography equipment remains stubbornly resistant to rapid duplication.', 'Lin-Wei Chen', 'M.Sc. Political Economy • Asia-Pacific Desk', 'https://www.linkedin.com/')">
                     <div>
                         <div class="h-48 bg-zinc-900 overflow-hidden relative">
-                            <img src="https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=800&q=80" alt="Microchip" class="w-full h-full object-cover opacity-80">
+                            <img src="https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=800&q=80" alt="Microchip" class="w-full h-full object-cover opacity-85">
                         </div>
                         <div class="p-6">
                             <div class="flex items-center space-x-2 text-[10px] font-bold uppercase tracking-widest text-brand-accent mb-3">
                                 <span>Economy • ASIA</span>
                                 <span>&bull;</span>
-                                <span class="text-brand-text/50">7 Min Read</span>
+                                <span class="text-zinc-200">7 Min Read</span>
                             </div>
                             <h4 class="font-serif text-xl font-bold text-white leading-snug mb-3">
                                 Semiconductor Sovereignty and the East Asian Supply Chain
                             </h4>
-                            <p class="text-brand-text/60 text-xs leading-relaxed">
+                            <p class="text-zinc-100 text-xs leading-relaxed">
                                 Industrial policy returns to the forefront as nations race to subsidize domestic chip fabrication and insulate against geopolitical shocks.
                             </p>
                         </div>
                     </div>
-                    <div class="px-6 py-4 border-t border-brand-border flex items-center justify-between text-[11px] font-bold uppercase tracking-wider text-brand-text/50">
-                        <span>By Markets Desk</span>
+                    <div class="px-6 py-4 border-t border-brand-border flex items-center justify-between text-[11px] font-bold uppercase tracking-wider text-zinc-100">
+                        <span>By Lin-Wei Chen</span>
                         <span class="text-brand-accent">Read Brief &rarr;</span>
                     </div>
                 </article>
 
                 <!-- Static Card 3 -->
-                <article data-category="Politics UK" class="article-card bg-brand-card border border-brand-border rounded-sm overflow-hidden flex flex-col justify-between cursor-pointer" onclick="openArticle('Post-Brexit Financial Divergence: The City of London’s Next Act', 'Politics • UK', '4 Min Read', 'https://images.unsplash.com/photo-1513635269975-59663e0ac1ad?auto=format&fit=crop&w=800&q=80', 'Years after formal withdrawal from the European single market, Westminster continues to navigate the delicate balance between regulatory autonomy and market access.\n\nThe Edinburgh Reforms represent a concerted effort to strip back continental capital requirements, yet institutional investors remain cautious about divergence that increases compliance friction across the English Channel.', 'Whitehall Desk', 'London School of Economics Contributors')">
+                <article data-category="Politics UK" class="static-sample-article article-card bg-[#27272A] border border-brand-border rounded-sm overflow-hidden flex flex-col justify-between cursor-pointer" onclick="openArticle('Post-Brexit Financial Divergence: The City of London’s Next Act', 'Politics • UK', '4 Min Read', 'https://images.unsplash.com/photo-1513635269975-59663e0ac1ad?auto=format&fit=crop&w=800&q=80', 'Years after formal withdrawal from the European single market, Westminster continues to navigate the delicate balance between regulatory autonomy and market access.\n\nThe Edinburgh Reforms represent a concerted effort to strip back continental capital requirements, yet institutional investors remain cautious about divergence that increases compliance friction across the English Channel.', 'Arthur Pendelton', 'M.Phil. Public Policy • Whitehall Desk', 'https://www.linkedin.com/')">
                     <div>
                         <div class="h-48 bg-zinc-900 overflow-hidden relative">
-                            <img src="https://images.unsplash.com/photo-1513635269975-59663e0ac1ad?auto=format&fit=crop&w=800&q=80" alt="London" class="w-full h-full object-cover opacity-80">
+                            <img src="https://images.unsplash.com/photo-1513635269975-59663e0ac1ad?auto=format&fit=crop&w=800&q=80" alt="London" class="w-full h-full object-cover opacity-85">
                         </div>
                         <div class="p-6">
                             <div class="flex items-center space-x-2 text-[10px] font-bold uppercase tracking-widest text-brand-accent mb-3">
                                 <span>Politics • UK</span>
                                 <span>&bull;</span>
-                                <span class="text-brand-text/50">4 Min Read</span>
+                                <span class="text-zinc-200">4 Min Read</span>
                             </div>
                             <h4 class="font-serif text-xl font-bold text-white leading-snug mb-3">
                                 Post-Brexit Financial Divergence: The City of London’s Next Act
                             </h4>
-                            <p class="text-brand-text/60 text-xs leading-relaxed">
+                            <p class="text-zinc-100 text-xs leading-relaxed">
                                 Assessing the impact of the Edinburgh Reforms and whether regulatory deregulation can restore capital market competitiveness.
                             </p>
                         </div>
                     </div>
-                    <div class="px-6 py-4 border-t border-brand-border flex items-center justify-between text-[11px] font-bold uppercase tracking-wider text-brand-text/50">
-                        <span>By Whitehall Desk</span>
+                    <div class="px-6 py-4 border-t border-brand-border flex items-center justify-between text-[11px] font-bold uppercase tracking-wider text-zinc-100">
+                        <span>By Arthur Pendelton</span>
                         <span class="text-brand-accent">Read Brief &rarr;</span>
                     </div>
                 </article>
@@ -226,18 +241,31 @@
             <div class="flex items-center space-x-2 text-xs font-bold uppercase tracking-widest text-brand-accent mb-4">
                 <span id="reader-category">Category</span>
                 <span>&bull;</span>
-                <span id="reader-time" class="text-brand-text/50">5 Min Read</span>
+                <span id="reader-time" class="text-zinc-200">5 Min Read</span>
             </div>
 
             <h1 id="reader-title" class="font-serif text-3xl sm:text-5xl font-bold text-white leading-tight mb-8">
                 Article Title
             </h1>
 
-            <div class="flex items-center space-x-3 pb-8 mb-8 border-b border-brand-border">
-                <div id="reader-author-initials" class="w-10 h-10 rounded-full bg-brand-accent flex items-center justify-center text-white font-bold text-sm">CI</div>
-                <div>
-                    <div id="reader-author" class="text-xs font-bold text-white uppercase tracking-wider">Conflict of Interest Contributors</div>
-                    <div id="reader-role" class="text-[11px] text-brand-text/50 uppercase tracking-widest">Verified Academic & Policy Analysis</div>
+            <!-- Author Attribution Bar with LinkedIn Link -->
+            <div class="flex flex-wrap items-center justify-between gap-4 pb-8 mb-8 border-b border-brand-border">
+                <div class="flex items-center space-x-3">
+                    <div id="reader-author-initials" class="w-10 h-10 rounded-full bg-brand-accent flex items-center justify-center text-white font-bold text-sm">CI</div>
+                    <div>
+                        <div id="reader-author" class="text-xs font-bold text-white uppercase tracking-wider">Conflict of Interest Contributors</div>
+                        <div id="reader-role" class="text-[11px] text-zinc-200 uppercase tracking-widest mt-0.5">Verified Academic &amp; Policy Analysis</div>
+                    </div>
+                </div>
+                
+                <div class="flex items-center space-x-3">
+                    <a id="reader-linkedin" href="#" target="_blank" rel="noopener noreferrer" class="hidden inline-flex items-center space-x-2 bg-[#0A66C2] hover:bg-[#004182] text-white text-[11px] font-bold uppercase tracking-wider px-3.5 py-2 rounded-sm transition-colors">
+                        <svg class="w-3.5 h-3.5 fill-current" viewBox="0 0 24 24"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg>
+                        <span>Connect on LinkedIn</span>
+                    </a>
+                    <button onclick="showAbout()" class="text-[11px] font-bold uppercase tracking-wider text-zinc-100 hover:text-white border border-brand-border px-3 py-2 rounded-sm transition-colors">
+                        Editorial Profile
+                    </button>
                 </div>
             </div>
 
@@ -245,75 +273,192 @@
                 <img id="reader-image" src="" alt="Article Cover" class="w-full max-h-[450px] object-cover">
             </div>
 
-            <div id="reader-content" class="font-serif text-lg text-brand-text/90 leading-relaxed space-y-6">
+            <!-- High-contrast light text for comfortable dark mode reading -->
+            <div id="reader-content" class="font-serif text-lg text-[#FAFAFA] leading-relaxed space-y-6">
                 <!-- Content injected via JS -->
             </div>
         </div>
 
-        <!-- VIEW 3: ABOUT US PAGE (Hidden by default) -->
-        <div id="about-view" class="hidden max-w-4xl mx-auto py-8">
+        <!-- VIEW 3: ABOUT US & WRITERS DIRECTORY (Hidden by default) -->
+        <div id="about-view" class="hidden max-w-5xl mx-auto py-8">
             <button id="back-from-about" class="flex items-center space-x-2 text-xs font-bold uppercase tracking-widest text-brand-accent hover:text-white transition-colors mb-8">
                 <span>&larr; Return to Front Page</span>
             </button>
 
-            <div class="bg-brand-card border border-brand-border p-8 sm:p-14 rounded-sm">
-                <div class="text-xs font-black uppercase tracking-widest text-brand-accent mb-3">Our Mandate & Structure</div>
-                <h1 class="font-serif text-3xl sm:text-5xl font-bold text-white leading-tight mb-8">
+            <!-- Mission Statement Card (All fields editable via Admin CMS) -->
+            <div class="bg-[#27272A] border border-brand-border p-8 sm:p-14 rounded-sm mb-12">
+                <div id="cms-about-tag" class="text-xs font-black uppercase tracking-widest text-brand-accent mb-3">Our Mandate &amp; Structure</div>
+                <h1 id="cms-about-title" class="font-serif text-3xl sm:text-5xl font-bold text-white leading-tight mb-8">
                     Uncompromised Analysis. Zero Commercial Bias.
                 </h1>
 
-                <div class="font-serif text-brand-text/80 space-y-6 leading-relaxed text-base sm:text-lg">
-                    <p class="drop-cap">
+                <div class="font-serif text-[#FAFAFA] space-y-6 leading-relaxed text-base sm:text-lg">
+                    <p id="cms-about-p1" class="drop-cap">
                         Conflict of Interest is an independent, non-profit digital publication dedicated to rigorous analysis at the intersection of law, technology, politics, and global economics. In an era where media ecosystems are increasingly captured by corporate sponsorship and algorithmic outrage, we operate on a radically different foundational premise: expertise over clicks.
                     </p>
-                    <p>
-                        Our newsroom is uniquely structured as an international collective. Every brief, docket analysis, and essay published on this platform is authored by advanced university students, legal researchers, and credentialed graduates holding degrees directly within the fields they cover. From antitrust law in Washington to regulatory frameworks in Brussels and supply chain economics in East Asia, our contributors write from the frontlines of academic and policy research.
+                    <p id="cms-about-p2">
+                        Our newsroom is uniquely structured as an international academic and policy collective. Every brief, docket analysis, and essay published on this platform is authored by advanced university students, legal researchers, and credentialed graduates holding degrees directly within the fields they cover. From antitrust law in Washington to regulatory frameworks in Brussels and supply chain economics in East Asia, our contributors write from the frontlines of scholarly research.
                     </p>
-                    <blockquote>
-                        "True objectivity requires structural independence. As a registered non-profit initiative, we answer to neither shareholders nor political action committees—only to the evidentiary standard of our research."
+                    <blockquote id="cms-about-quote">
+                        "True objectivity requires structural independence. As a non-profit initiative, we answer to neither shareholders nor political action committees—only to the evidentiary standard of our research."
                     </blockquote>
-                    <p>
-                        By bridging the gap between dense academic journals and rapid-fire breaking news, Conflict of Interest provides readers with institutional-grade briefings that clarify the hidden mechanics of global power.
-                    </p>
                 </div>
 
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mt-12 pt-12 border-t border-brand-border font-sans">
                     <div>
-                        <h4 class="text-xs font-black uppercase tracking-widest text-white mb-2">100% Non-Profit</h4>
-                        <p class="text-xs text-brand-text/60 leading-relaxed">No paywalls, no venture capital mandates, and zero commercial advertising interference.</p>
+                        <h4 id="cms-pillar1-title" class="text-xs font-black uppercase tracking-widest text-white mb-2">100% Non-Profit</h4>
+                        <p id="cms-pillar1-desc" class="text-xs text-zinc-200 leading-relaxed">No paywalls, no venture capital mandates, and zero commercial advertising interference.</p>
                     </div>
                     <div>
-                        <h4 class="text-xs font-black uppercase tracking-widest text-white mb-2">Credentialed Contributors</h4>
-                        <p class="text-xs text-brand-text/60 leading-relaxed">Written exclusively by degree-holders and specialized university researchers in law, economics, and policy.</p>
+                        <h4 id="cms-pillar2-title" class="text-xs font-black uppercase tracking-widest text-white mb-2">Credentialed Contributors</h4>
+                        <p id="cms-pillar2-desc" class="text-xs text-zinc-200 leading-relaxed">Written exclusively by degree-holders and specialized university researchers in law, economics, and policy.</p>
                     </div>
                     <div>
-                        <h4 class="text-xs font-black uppercase tracking-widest text-white mb-2">Global Perspective</h4>
-                        <p class="text-xs text-brand-text/60 leading-relaxed">Decentralized editorial desks covering the EU, UK, USA, and Asia-Pacific jurisdictions.</p>
+                        <h4 id="cms-pillar3-title" class="text-xs font-black uppercase tracking-widest text-white mb-2">Global Perspective</h4>
+                        <p id="cms-pillar3-desc" class="text-xs text-zinc-200 leading-relaxed">Decentralized editorial desks covering the EU, UK, USA, and Asia-Pacific jurisdictions.</p>
                     </div>
+                </div>
+            </div>
+
+            <!-- WRITERS & EDITORIAL DIRECTORY -->
+            <div class="bg-[#27272A] border border-brand-border p-8 sm:p-14 rounded-sm">
+                <div class="flex flex-col sm:flex-row sm:items-end justify-between mb-10 pb-6 border-b border-brand-border">
+                    <div>
+                        <div class="text-xs font-black uppercase tracking-widest text-brand-accent mb-2">The Collective</div>
+                        <h2 id="cms-writers-heading" class="font-serif text-2xl sm:text-4xl font-bold text-white">Editorial Board &amp; Contributors</h2>
+                    </div>
+                    <p id="cms-writers-sub" class="text-xs text-zinc-200 mt-2 sm:mt-0 max-w-xs">
+                        Connect directly with our researchers and degree-holding analysts via LinkedIn.
+                    </p>
+                </div>
+
+                <!-- Contributors Grid -->
+                <div id="writers-directory-grid" class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    
+                    <!-- Sample Writer 1 -->
+                    <div class="static-sample-writer bg-[#18181B] border border-brand-border p-6 rounded-sm flex flex-col justify-between hover:border-brand-accent transition-colors">
+                        <div>
+                            <div class="flex items-start justify-between mb-4">
+                                <div class="flex items-center space-x-3">
+                                    <div class="w-12 h-12 rounded-full bg-brand-accent flex items-center justify-center text-white font-black text-sm shrink-0">ER</div>
+                                    <div>
+                                        <h3 class="font-serif text-lg font-bold text-white">Elena Rostova</h3>
+                                        <p class="text-[11px] font-bold uppercase tracking-widest text-brand-accent">LL.M. European Law &bull; Brussels Desk</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <p class="text-xs text-zinc-100 leading-relaxed mb-6">
+                                Specializes in European Union digital governance, extrateritorial regulatory frameworks, and the Brussels Effect on foundational AI architecture.
+                            </p>
+                        </div>
+                        <div class="pt-4 border-t border-brand-border flex items-center justify-between">
+                            <span class="text-[10px] font-bold uppercase tracking-widest text-zinc-300">Tech &amp; EU Law</span>
+                            <a href="https://www.linkedin.com/" target="_blank" rel="noopener noreferrer" class="inline-flex items-center space-x-1.5 text-xs font-bold text-white bg-[#0A66C2] hover:bg-[#004182] px-3 py-1.5 rounded-sm transition-colors">
+                                <svg class="w-3.5 h-3.5 fill-current" viewBox="0 0 24 24"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg>
+                                <span>LinkedIn Profile</span>
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- Sample Writer 2 -->
+                    <div class="static-sample-writer bg-[#18181B] border border-brand-border p-6 rounded-sm flex flex-col justify-between hover:border-brand-accent transition-colors">
+                        <div>
+                            <div class="flex items-start justify-between mb-4">
+                                <div class="flex items-center space-x-3">
+                                    <div class="w-12 h-12 rounded-full bg-brand-accent flex items-center justify-center text-white font-black text-sm shrink-0">MV</div>
+                                    <div>
+                                        <h3 class="font-serif text-lg font-bold text-white">Marcus Vance</h3>
+                                        <p class="text-[11px] font-bold uppercase tracking-widest text-brand-accent">J.D. Candidate &bull; Washington D.C. Desk</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <p class="text-xs text-zinc-100 leading-relaxed mb-6">
+                                Focuses on American antitrust enforcement, Neo-Brandeisian legal doctrine, and structural remedies in Department of Justice and FTC litigation.
+                            </p>
+                        </div>
+                        <div class="pt-4 border-t border-brand-border flex items-center justify-between">
+                            <span class="text-[10px] font-bold uppercase tracking-widest text-zinc-300">Antitrust &amp; USA Law</span>
+                            <a href="https://www.linkedin.com/" target="_blank" rel="noopener noreferrer" class="inline-flex items-center space-x-1.5 text-xs font-bold text-white bg-[#0A66C2] hover:bg-[#004182] px-3 py-1.5 rounded-sm transition-colors">
+                                <svg class="w-3.5 h-3.5 fill-current" viewBox="0 0 24 24"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg>
+                                <span>LinkedIn Profile</span>
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- Sample Writer 3 -->
+                    <div class="static-sample-writer bg-[#18181B] border border-brand-border p-6 rounded-sm flex flex-col justify-between hover:border-brand-accent transition-colors">
+                        <div>
+                            <div class="flex items-start justify-between mb-4">
+                                <div class="flex items-center space-x-3">
+                                    <div class="w-12 h-12 rounded-full bg-brand-accent flex items-center justify-center text-white font-black text-sm shrink-0">LC</div>
+                                    <div>
+                                        <h3 class="font-serif text-lg font-bold text-white">Lin-Wei Chen</h3>
+                                        <p class="text-[11px] font-bold uppercase tracking-widest text-brand-accent">M.Sc. Political Economy &bull; Asia-Pacific Desk</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <p class="text-xs text-zinc-100 leading-relaxed mb-6">
+                                Researches East Asian industrial policy, semiconductor supply chain sovereignty, and trade statecraft across the Taiwan Strait and Indo-Pacific.
+                            </p>
+                        </div>
+                        <div class="pt-4 border-t border-brand-border flex items-center justify-between">
+                            <span class="text-[10px] font-bold uppercase tracking-widest text-zinc-300">Economy &amp; Asia-Pacific</span>
+                            <a href="https://www.linkedin.com/" target="_blank" rel="noopener noreferrer" class="inline-flex items-center space-x-1.5 text-xs font-bold text-white bg-[#0A66C2] hover:bg-[#004182] px-3 py-1.5 rounded-sm transition-colors">
+                                <svg class="w-3.5 h-3.5 fill-current" viewBox="0 0 24 24"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg>
+                                <span>LinkedIn Profile</span>
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- Sample Writer 4 -->
+                    <div class="static-sample-writer bg-[#18181B] border border-brand-border p-6 rounded-sm flex flex-col justify-between hover:border-brand-accent transition-colors">
+                        <div>
+                            <div class="flex items-start justify-between mb-4">
+                                <div class="flex items-center space-x-3">
+                                    <div class="w-12 h-12 rounded-full bg-brand-accent flex items-center justify-center text-white font-black text-sm shrink-0">AP</div>
+                                    <div>
+                                        <h3 class="font-serif text-lg font-bold text-white">Arthur Pendelton</h3>
+                                        <p class="text-[11px] font-bold uppercase tracking-widest text-brand-accent">M.Phil. Public Policy &bull; Whitehall Desk</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <p class="text-xs text-zinc-100 leading-relaxed mb-6">
+                                Covers post-Brexit financial services divergence, UK constitutional reform, and regulatory competitiveness within the City of London.
+                            </p>
+                        </div>
+                        <div class="pt-4 border-t border-brand-border flex items-center justify-between">
+                            <span class="text-[10px] font-bold uppercase tracking-widest text-zinc-300">Politics &amp; UK Policy</span>
+                            <a href="https://www.linkedin.com/" target="_blank" rel="noopener noreferrer" class="inline-flex items-center space-x-1.5 text-xs font-bold text-white bg-[#0A66C2] hover:bg-[#004182] px-3 py-1.5 rounded-sm transition-colors">
+                                <svg class="w-3.5 h-3.5 fill-current" viewBox="0 0 24 24"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg>
+                                <span>LinkedIn Profile</span>
+                            </a>
+                        </div>
+                    </div>
+
                 </div>
             </div>
         </div>
 
         <!-- SUBSCRIBE / AUTHENTICATION SECTION -->
-        <section id="subscribe-section" class="mt-24 bg-brand-card border border-brand-border rounded-sm p-8 sm:p-12 max-w-3xl mx-auto">
+        <section id="subscribe-section" class="mt-24 bg-[#27272A] border border-brand-border rounded-sm p-8 sm:p-12 max-w-3xl mx-auto">
             <div id="sub-form-container">
                 <div class="text-center mb-8">
                     <span class="text-[10px] font-black uppercase tracking-widest text-brand-accent px-3 py-1 bg-brand-accent/10 border border-brand-accent/30 rounded-sm">Encrypted Reader Access</span>
-                    <h3 class="font-serif text-2xl sm:text-3xl font-bold text-white mt-4 mb-2">Subscribe to the Docket</h3>
-                    <p class="text-xs text-brand-text/60 max-w-md mx-auto">Create a secure reader account to receive our weekly global briefings and unlock member-only policy dossiers.</p>
+                    <h3 id="cms-sub-title" class="font-serif text-2xl sm:text-3xl font-bold text-white mt-4 mb-2">Subscribe to the Docket</h3>
+                    <p id="cms-sub-desc" class="text-xs text-zinc-100 max-w-md mx-auto">Create a secure reader account to receive our weekly global briefings and unlock member-only policy dossiers.</p>
                 </div>
 
                 <form id="subscribe-form" class="space-y-4 max-w-md mx-auto">
                     <div>
-                        <label class="block text-[10px] font-bold uppercase tracking-widest text-brand-text/70 mb-1">Email Address</label>
-                        <input type="email" id="sub-email" required placeholder="researcher@university.edu" class="w-full px-4 py-3 bg-brand-bg border border-brand-border rounded-sm text-white text-sm focus:outline-none focus:border-brand-accent">
+                        <label class="block text-[10px] font-bold uppercase tracking-widest text-zinc-100 mb-1">Email Address</label>
+                        <input type="email" id="sub-email" required placeholder="researcher@university.edu" class="w-full px-4 py-3 bg-[#18181B] border border-brand-border rounded-sm text-white text-sm focus:outline-none focus:border-brand-accent">
                     </div>
                     <div>
-                        <label class="block text-[10px] font-bold uppercase tracking-widest text-brand-text/70 mb-1">Create Password (Min. 6 Characters)</label>
-                        <input type="password" id="sub-password" required minlength="6" placeholder="••••••••" class="w-full px-4 py-3 bg-brand-bg border border-brand-border rounded-sm text-white text-sm focus:outline-none focus:border-brand-accent">
+                        <label class="block text-[10px] font-bold uppercase tracking-widest text-zinc-100 mb-1">Create Password (Min. 6 Characters)</label>
+                        <input type="password" id="sub-password" required minlength="6" placeholder="••••••••" class="w-full px-4 py-3 bg-[#18181B] border border-brand-border rounded-sm text-white text-sm focus:outline-none focus:border-brand-accent">
                     </div>
                     <button type="submit" id="sub-submit-btn" class="w-full bg-brand-accent hover:bg-red-700 text-white font-bold uppercase tracking-widest text-xs py-4 rounded-sm transition-colors">
-                        Register & Subscribe
+                        Register &amp; Subscribe
                     </button>
                     <p id="sub-error" class="text-brand-accent text-xs font-bold text-center hidden mt-2"></p>
                 </form>
@@ -323,7 +468,7 @@
             <div id="sub-success-container" class="hidden text-center py-6">
                 <div class="w-12 h-12 rounded-full bg-green-500/20 border border-green-500 text-green-400 flex items-center justify-center mx-auto mb-4 font-bold">✓</div>
                 <h4 class="font-serif text-2xl font-bold text-white mb-2">Reader Access Granted</h4>
-                <p id="logged-in-email" class="text-xs text-brand-text/60 uppercase tracking-widest mb-6"></p>
+                <p id="logged-in-email" class="text-xs text-zinc-200 uppercase tracking-widest mb-6"></p>
                 <button id="sign-out-btn" class="text-xs font-bold uppercase tracking-widest text-brand-accent hover:text-white border border-brand-accent px-6 py-2.5 rounded-sm transition-colors">
                     Sign Out
                 </button>
@@ -339,25 +484,25 @@
                 <h2 class="uppercase font-black tracking-tighter leading-[0.85] text-xl mb-4">
                     <span class="text-white">Conflict</span> <span class="text-brand-accent">Of Interest</span>
                 </h2>
-                <p class="text-xs text-brand-text/50 max-w-sm leading-relaxed mb-4">
+                <p id="cms-footer-desc" class="text-xs text-zinc-200 max-w-sm leading-relaxed mb-4">
                     An independent, non-profit journal run by students and degree-holding researchers worldwide. Dedicated to uncompromised analysis of law, tech, politics, and the economy.
                 </p>
-                <p class="text-[10px] text-brand-text/40 uppercase tracking-widest">&copy; 2026 Conflict of Interest Non-Profit Collective. All rights reserved.</p>
+                <p id="cms-footer-copy" class="text-[10px] text-zinc-400 uppercase tracking-widest">&copy; 2026 Conflict of Interest Non-Profit Collective. All rights reserved.</p>
             </div>
             <div>
                 <h4 class="text-xs font-black uppercase tracking-widest text-white mb-4">Navigation</h4>
-                <ul class="space-y-2 text-xs text-brand-text/60">
+                <ul class="space-y-2 text-xs text-zinc-200">
                     <li><a href="#" onclick="showHome()" class="hover:text-brand-accent transition-colors">Front Page</a></li>
-                    <li><a href="#" onclick="showAbout()" class="hover:text-brand-accent transition-colors">About the Collective</a></li>
+                    <li><a href="#" onclick="showAbout()" class="hover:text-brand-accent transition-colors">About &amp; Writers Directory</a></li>
                     <li><a href="admin.html" class="hover:text-brand-accent transition-colors">Contributor Newsroom (Admin)</a></li>
                 </ul>
             </div>
             <div>
-                <h4 class="text-xs font-black uppercase tracking-widest text-white mb-4">Legal & Ethics</h4>
-                <ul class="space-y-2 text-xs text-brand-text/60">
-                    <li><span class="text-brand-text/40">Non-Profit Charter</span></li>
-                    <li><span class="text-brand-text/40">Editorial Independence Policy</span></li>
-                    <li><span class="text-brand-text/40">Privacy & GDPR</span></li>
+                <h4 class="text-xs font-black uppercase tracking-widest text-white mb-4">Legal &amp; Ethics</h4>
+                <ul class="space-y-2 text-xs text-zinc-200">
+                    <li><span>Non-Profit Charter</span></li>
+                    <li><span>Editorial Independence Policy</span></li>
+                    <li><span>Privacy &amp; GDPR</span></li>
                 </ul>
             </div>
         </div>
@@ -370,6 +515,23 @@
         const aboutView = document.getElementById('about-view');
         const progressContainer = document.getElementById('progress-container');
         const progressBar = document.getElementById('progress-bar');
+
+        // Default Featured Article State (Can be overridden by CMS)
+        window.featuredArticleData = {
+            title: 'The Brussels Effect: How EU AI Regulation Shapes Silicon Valley',
+            category: 'Tech • EU',
+            readTime: '6 Min Read',
+            imageUrl: 'https://images.unsplash.com/photo-1541872703-74c5e44368f9?auto=format&fit=crop&w=1200&q=80',
+            content: 'The regulatory apparatus of the European Union has long operated as the de facto global standard-bearer for digital rights and corporate accountability. With the formal implementation of the Artificial Intelligence Act, Brussels is once again testing the limits of its extraterritorial reach.\n\nFor technology giants headquartered in California, compliance is not merely a regional cost of doing business—it is an architectural mandate. Engineering teams rarely build fractured codebases for separate jurisdictions when the underlying infrastructure relies on unified foundation models.\n\n> We are not regulating technology; we are establishing the constitutional parameters for algorithmic governance in the twenty-first century.\n\nHowever, this regulatory ambition creates an immediate friction with domestic innovation policy. Startups across Berlin, Paris, and Amsterdam warn that stringent compliance tiers disproportionately favor entrenched American incumbents who possess the legal capital to absorb regulatory shocks.',
+            author: 'Elena Rostova',
+            role: 'LL.M. European Law • Brussels Desk',
+            linkedin: 'https://www.linkedin.com/'
+        };
+
+        document.getElementById('featured-article-card').addEventListener('click', () => {
+            const f = window.featuredArticleData;
+            window.openArticle(f.title, f.category, f.readTime, f.imageUrl, f.content, f.author, f.role, f.linkedin);
+        });
 
         function showHome() {
             homeView.classList.remove('hidden');
@@ -387,13 +549,21 @@
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
-        window.openArticle = function(title, category, readTime, imageUrl, content, authorName = 'Conflict of Interest Contributors', authorRole = 'Verified Academic & Policy Analysis') {
+        window.openArticle = function(title, category, readTime, imageUrl, content, authorName = 'Conflict of Interest Contributors', authorRole = 'Verified Academic & Policy Analysis', authorLinkedin = '') {
             document.getElementById('reader-title').textContent = title;
             document.getElementById('reader-category').textContent = category;
             document.getElementById('reader-time').textContent = readTime;
             document.getElementById('reader-image').src = imageUrl;
             document.getElementById('reader-author').textContent = authorName;
             document.getElementById('reader-role').textContent = authorRole;
+
+            const linkedinBtn = document.getElementById('reader-linkedin');
+            if (authorLinkedin && authorLinkedin.trim() !== '') {
+                linkedinBtn.href = authorLinkedin;
+                linkedinBtn.classList.remove('hidden');
+            } else {
+                linkedinBtn.classList.add('hidden');
+            }
 
             const initials = authorName.split(' ').map(n => n[0]).join('').substring(0, 2).toUpperCase() || 'CI';
             document.getElementById('reader-author-initials').textContent = initials;
@@ -406,9 +576,10 @@
                     const bq = document.createElement('blockquote');
                     bq.textContent = p.replace('>', '').trim();
                     contentContainer.appendChild(bq);
-                } else {
+                } else if (p.trim() !== '') {
                     const para = document.createElement('p');
                     if (index === 0) para.classList.add('drop-cap');
+                    para.className = "text-[#FAFAFA] mb-6 leading-relaxed";
                     para.textContent = p.trim();
                     contentContainer.appendChild(para);
                 }
@@ -458,6 +629,7 @@
                 const articles = document.querySelectorAll('article[data-category]');
                 let visibleCount = 0;
                 articles.forEach(article => {
+                    if (article.classList.contains('cms-hidden')) return;
                     const cats = article.getAttribute('data-category');
                     if (filter === 'all' || cats.includes(filter)) {
                         article.classList.remove('hidden');
@@ -471,11 +643,11 @@
         });
     </script>
 
-    <!-- Firebase Live Database & Auth Script -->
+    <!-- Firebase Live CMS, Database & Auth Script -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
         import { getAuth, createUserWithEmailAndPassword, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
-        import { getFirestore, collection, getDocs, query, orderBy } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+        import { getFirestore, collection, doc, getDoc, getDocs, query, orderBy } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
 
         // YOUR REAL FIREBASE CONFIGURATION
         const firebaseConfig = {
@@ -492,57 +664,209 @@
         const auth = getAuth(app);
         const db = getFirestore(app);
 
-        // Fetch Live Published Articles from Firestore
+        const knownAuthors = new Set(['Elena Rostova', 'Marcus Vance', 'Lin-Wei Chen', 'Arthur Pendelton']);
+
+        // 1. Load Dynamic Site Text & Page Settings from CMS
+        async function loadSiteCMS() {
+            try {
+                const cmsSnap = await getDoc(doc(db, 'site_settings', 'main'));
+                if (!cmsSnap.exists()) return;
+                const cms = cmsSnap.data();
+
+                const setTxt = (id, val) => { if (val && document.getElementById(id)) document.getElementById(id).textContent = val; };
+
+                // Header & Home Settings
+                setTxt('cms-logo-line1', cms.logoLine1);
+                setTxt('cms-logo-line2', cms.logoLine2);
+                setTxt('cms-home-grid-heading', cms.homeGridHeading);
+
+                // Featured Hero Override
+                if (cms.featTitle) {
+                    window.featuredArticleData = {
+                        title: cms.featTitle,
+                        category: cms.featCategory || 'Featured Brief',
+                        readTime: cms.featReadTime || '5 Min Read',
+                        imageUrl: cms.featImage || window.featuredArticleData.imageUrl,
+                        content: cms.featContent || window.featuredArticleData.content,
+                        author: cms.featAuthor || 'Editorial Desk',
+                        role: cms.featRole || 'Verified Analysis',
+                        linkedin: cms.featLinkedin || ''
+                    };
+                    setTxt('cms-feat-title', cms.featTitle);
+                    setTxt('cms-feat-excerpt', cms.featExcerpt);
+                    setTxt('cms-feat-category', cms.featCategory);
+                    setTxt('cms-feat-readtime', cms.featReadTime);
+                    setTxt('cms-feat-author', cms.featAuthor);
+                    setTxt('cms-feat-role', cms.featRole);
+                    if (cms.featImage) document.getElementById('cms-feat-image').src = cms.featImage;
+                    if (cms.featAuthor) {
+                        const init = cms.featAuthor.split(' ').map(n => n[0]).join('').substring(0, 2).toUpperCase();
+                        setTxt('cms-feat-initials', init);
+                    }
+                }
+
+                // Hide Static Sample Articles / Writers if toggled off in Admin
+                if (cms.hideSampleArticles) {
+                    document.querySelectorAll('.static-sample-article').forEach(el => {
+                        el.classList.add('hidden', 'cms-hidden');
+                    });
+                }
+                if (cms.hideSampleWriters) {
+                    document.querySelectorAll('.static-sample-writer').forEach(el => {
+                        el.classList.add('hidden');
+                    });
+                }
+
+                // About Us Page Content
+                setTxt('cms-about-tag', cms.aboutTag);
+                setTxt('cms-about-title', cms.aboutTitle);
+                setTxt('cms-about-p1', cms.aboutP1);
+                setTxt('cms-about-p2', cms.aboutP2);
+                setTxt('cms-about-quote', cms.aboutQuote);
+                setTxt('cms-pillar1-title', cms.pillar1Title);
+                setTxt('cms-pillar1-desc', cms.pillar1Desc);
+                setTxt('cms-pillar2-title', cms.pillar2Title);
+                setTxt('cms-pillar2-desc', cms.pillar2Desc);
+                setTxt('cms-pillar3-title', cms.pillar3Title);
+                setTxt('cms-pillar3-desc', cms.pillar3Desc);
+                setTxt('cms-writers-heading', cms.writersHeading);
+                setTxt('cms-writers-sub', cms.writersSub);
+
+                // Subscribe & Footer Content
+                setTxt('cms-sub-title', cms.subTitle);
+                setTxt('cms-sub-desc', cms.subDesc);
+                setTxt('cms-footer-desc', cms.footerDesc);
+                setTxt('cms-footer-copy', cms.footerCopy);
+            } catch (err) {
+                console.warn("CMS settings not customized yet:", err.message);
+            }
+        }
+
+        // 2. Load Custom Writers Directory from Firestore
+        function renderWriterCard(name, role, bio, specialty, linkedin) {
+            const initials = name.split(' ').map(n => n[0]).join('').substring(0, 2).toUpperCase() || 'CI';
+            const writerCard = document.createElement('div');
+            writerCard.className = "bg-[#18181B] border border-brand-border p-6 rounded-sm flex flex-col justify-between hover:border-brand-accent transition-colors";
+            writerCard.innerHTML = `
+                <div>
+                    <div class="flex items-start justify-between mb-4">
+                        <div class="flex items-center space-x-3">
+                            <div class="w-12 h-12 rounded-full bg-brand-accent flex items-center justify-center text-white font-black text-sm shrink-0">${initials}</div>
+                            <div>
+                                <h3 class="font-serif text-lg font-bold text-white">${name}</h3>
+                                <p class="text-[11px] font-bold uppercase tracking-widest text-brand-accent">${role}</p>
+                            </div>
+                        </div>
+                    </div>
+                    <p class="text-xs text-zinc-100 leading-relaxed mb-6">${bio}</p>
+                </div>
+                <div class="pt-4 border-t border-brand-border flex items-center justify-between">
+                    <span class="text-[10px] font-bold uppercase tracking-widest text-zinc-300">${specialty || 'Policy Analyst'}</span>
+                    ${linkedin ? `
+                    <a href="${linkedin}" target="_blank" rel="noopener noreferrer" class="inline-flex items-center space-x-1.5 text-xs font-bold text-white bg-[#0A66C2] hover:bg-[#004182] px-3 py-1.5 rounded-sm transition-colors">
+                        <svg class="w-3.5 h-3.5 fill-current" viewBox="0 0 24 24"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg>
+                        <span>LinkedIn Profile</span>
+                    </a>` : `<span class="text-[10px] uppercase tracking-widest text-zinc-400">Verified Contributor</span>`}
+                </div>
+            `;
+            return writerCard;
+        }
+
+        async function loadCustomWriters() {
+            try {
+                const writersGrid = document.getElementById('writers-directory-grid');
+                const snap = await getDocs(collection(db, 'writers'));
+                snap.forEach(d => {
+                    const w = d.data();
+                    if (w.name) {
+                        knownAuthors.add(w.name);
+                        const card = renderWriterCard(
+                            w.name,
+                            w.role || 'Editorial Contributor',
+                            w.bio || `Published researcher and policy analyst for Conflict of Interest.`,
+                            w.specialty || 'Global Policy',
+                            w.linkedin || ''
+                        );
+                        writersGrid.prepend(card);
+                    }
+                });
+            } catch (err) {
+                console.warn("Could not load custom writers:", err.message);
+            }
+        }
+
+        // 3. Fetch Live Published Articles from Firestore
         async function loadLiveArticles() {
             try {
                 const q = query(collection(db, 'articles'), orderBy('createdAt', 'desc'));
                 const snapshot = await getDocs(q);
                 const grid = document.getElementById('articles-grid');
+                const writersGrid = document.getElementById('writers-directory-grid');
 
-                snapshot.forEach(doc => {
-                    const data = doc.data();
+                snapshot.forEach(docSnap => {
+                    const data = docSnap.data();
                     const card = document.createElement('article');
                     card.setAttribute('data-category', data.category || 'Law');
-                    card.className = "article-card bg-brand-card border border-brand-border rounded-sm overflow-hidden flex flex-col justify-between cursor-pointer";
+                    card.className = "article-card bg-[#27272A] border border-brand-border rounded-sm overflow-hidden flex flex-col justify-between cursor-pointer";
                     
                     const excerpt = data.content ? data.content.substring(0, 140) + '...' : '';
                     const img = data.imageUrl || 'https://placehold.co/800x500/27272A/DC2626?text=Conflict+Of+Interest';
                     const authorName = data.author || 'Editorial Desk';
                     const authorRole = data.authorRole || 'Verified Academic & Policy Analysis';
+                    const authorLinkedin = data.authorLinkedin || '';
 
                     card.innerHTML = `
                         <div>
                             <div class="h-48 bg-zinc-900 overflow-hidden relative">
-                                <img src="${img}" alt="${data.title}" class="w-full h-full object-cover opacity-80">
+                                <img src="${img}" alt="${data.title}" class="w-full h-full object-cover opacity-85">
                             </div>
                             <div class="p-6">
                                 <div class="flex items-center space-x-2 text-[10px] font-bold uppercase tracking-widest text-brand-accent mb-3">
                                     <span>${data.category}</span>
                                     <span>&bull;</span>
-                                    <span class="text-brand-text/50">${data.readTime || '5 Min Read'}</span>
+                                    <span class="text-zinc-200">${data.readTime || '5 Min Read'}</span>
                                 </div>
                                 <h4 class="font-serif text-xl font-bold text-white leading-snug mb-3">${data.title}</h4>
-                                <p class="text-brand-text/60 text-xs leading-relaxed">${excerpt}</p>
+                                <p class="text-zinc-100 text-xs leading-relaxed">${excerpt}</p>
                             </div>
                         </div>
-                        <div class="px-6 py-4 border-t border-brand-border flex items-center justify-between text-[11px] font-bold uppercase tracking-wider text-brand-text/50">
+                        <div class="px-6 py-4 border-t border-brand-border flex items-center justify-between text-[11px] font-bold uppercase tracking-wider text-zinc-100">
                             <span>By ${authorName}</span>
                             <span class="text-brand-accent">Read Brief &rarr;</span>
                         </div>
                     `;
 
                     card.addEventListener('click', () => {
-                        window.openArticle(data.title, data.category, data.readTime || '5 Min Read', img, data.content, authorName, authorRole);
+                        window.openArticle(data.title, data.category, data.readTime || '5 Min Read', img, data.content, authorName, authorRole, authorLinkedin);
                     });
 
                     grid.prepend(card);
+
+                    // Automatically add new published writers to the About Us Contributors Directory if not already listed
+                    if (authorName && !knownAuthors.has(authorName)) {
+                        knownAuthors.add(authorName);
+                        const writerCard = renderWriterCard(
+                            authorName,
+                            authorRole,
+                            `Published contributor covering ${data.category || 'global policy and legal analysis'} for the Conflict of Interest collective.`,
+                            data.category || 'Policy Analyst',
+                            authorLinkedin
+                        );
+                        writersGrid.prepend(writerCard);
+                    }
                 });
             } catch (err) {
                 console.warn("Could not load live articles yet:", err.message);
             }
         }
 
-        loadLiveArticles();
+        async function initSite() {
+            await loadSiteCMS();
+            await loadCustomWriters();
+            await loadLiveArticles();
+        }
+
+        initSite();
 
         // Subscriber Auth Logic
         const subForm = document.getElementById('subscribe-form');
