@@ -1,44 +1,44 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="dark">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Newsroom Admin | Conflict of Interest</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;900&family=Merriweather:wght@400;700&display=swap" rel="stylesheet">
+    <title>Newsroom CMS & Admin | Conflict of Interest</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&family=Merriweather:wght@400;700&display=swap" rel="stylesheet">
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = {
             theme: {
                 extend: {
                     fontFamily: { sans: ['Inter', 'sans-serif'], serif: ['Merriweather', 'serif'] },
-                    colors: { brand: { bg: '#18181B', text: '#E4E4E7', accent: '#DC2626', card: '#27272A', border: '#3F3F46' } }
+                    colors: { brand: { bg: '#18181B', text: '#FAFAFA', accent: '#DC2626', card: '#27272A', border: '#3F3F46' } }
                 }
             }
         }
     </script>
     <style>
-        body { background-color: theme('colors.brand.bg'); color: theme('colors.brand.text'); }
+        html, body { background-color: #18181B !important; color: #FAFAFA !important; }
     </style>
 </head>
-<body class="font-sans antialiased min-h-screen flex flex-col items-center justify-center p-4">
+<body class="bg-[#18181B] text-[#FAFAFA] font-sans antialiased min-h-screen flex flex-col items-center justify-center p-4">
 
     <!-- LOGIN SCREEN -->
-    <div id="login-view" class="w-full max-w-md bg-brand-card p-8 border border-brand-border rounded-sm shadow-2xl">
+    <div id="login-view" class="w-full max-w-md bg-[#27272A] p-8 border border-brand-border rounded-sm shadow-2xl my-12">
         <div class="text-center mb-8">
             <h1 class="uppercase font-black tracking-tighter leading-[0.85] text-3xl mb-2">
                 <span class="text-white">Conflict</span><br><span class="text-brand-accent">Of Interest</span>
             </h1>
-            <p class="text-xs text-brand-text/50 uppercase tracking-widest font-bold mt-4">Restricted Access Newsroom</p>
+            <p class="text-xs text-zinc-200 uppercase tracking-widest font-bold mt-4">Full-Site CMS &amp; Newsroom</p>
         </div>
         
         <form id="login-form" class="space-y-4">
             <div>
-                <label class="block text-xs font-bold text-brand-text/70 uppercase tracking-wider mb-1">Admin Email</label>
-                <input type="email" id="admin-email" required class="w-full px-4 py-3 bg-brand-bg border border-brand-border rounded-sm focus:outline-none focus:border-brand-accent text-white">
+                <label class="block text-xs font-bold text-zinc-100 uppercase tracking-wider mb-1">Admin Email</label>
+                <input type="email" id="admin-email" required class="w-full px-4 py-3 bg-[#18181B] border border-brand-border rounded-sm focus:outline-none focus:border-brand-accent text-white">
             </div>
             <div>
-                <label class="block text-xs font-bold text-brand-text/70 uppercase tracking-wider mb-1">Password</label>
-                <input type="password" id="admin-password" required class="w-full px-4 py-3 bg-brand-bg border border-brand-border rounded-sm focus:outline-none focus:border-brand-accent text-white">
+                <label class="block text-xs font-bold text-zinc-100 uppercase tracking-wider mb-1">Password</label>
+                <input type="password" id="admin-password" required class="w-full px-4 py-3 bg-[#18181B] border border-brand-border rounded-sm focus:outline-none focus:border-brand-accent text-white">
             </div>
             <button type="submit" id="login-btn" class="w-full bg-brand-accent hover:bg-red-700 text-white font-bold uppercase tracking-wider py-4 rounded-sm transition-colors mt-4">
                 Authenticate
@@ -48,99 +48,366 @@
     </div>
 
     <!-- ADMIN DASHBOARD (Hidden until logged in) -->
-    <div id="dashboard-view" class="hidden w-full max-w-4xl bg-brand-card p-8 border border-brand-border rounded-sm my-8">
-        <div class="flex justify-between items-center mb-8 pb-4 border-b border-brand-border">
+    <div id="dashboard-view" class="hidden w-full max-w-5xl bg-[#27272A] p-6 sm:p-10 border border-brand-border rounded-sm my-8">
+        
+        <!-- Top Header -->
+        <div class="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-4 mb-6 pb-6 border-b border-brand-border">
             <div>
-                <h2 class="text-xl font-black uppercase tracking-widest text-white">Newsroom Editor</h2>
-                <p class="text-xs text-brand-text/50 mt-1">Publish new briefs or manage existing dockets</p>
+                <h2 class="text-2xl font-black uppercase tracking-widest text-white">Full-Site Command Center</h2>
+                <p class="text-xs text-zinc-200 mt-1">Control articles, edit page text across the entire website, and manage your writer roster</p>
             </div>
             <div class="flex items-center space-x-4">
-                <a href="index.html" class="text-xs font-bold uppercase tracking-wider text-brand-accent hover:text-white transition-colors">View Live Site &rarr;</a>
-                <button id="logout-btn" class="text-xs font-bold uppercase tracking-wider text-brand-text/60 hover:text-brand-accent transition-colors border border-brand-border px-3 py-1.5 rounded-sm">Sign Out</button>
+                <a href="index.html" class="text-xs font-bold uppercase tracking-wider bg-zinc-800 hover:bg-zinc-700 text-white px-4 py-2 rounded-sm border border-brand-border transition-colors">View Live Site &rarr;</a>
+                <button id="logout-btn" class="text-xs font-bold uppercase tracking-wider text-zinc-200 hover:text-brand-accent transition-colors border border-brand-border px-3 py-2 rounded-sm">Sign Out</button>
             </div>
         </div>
 
-        <form id="publish-form" class="space-y-6">
-            <div>
-                <label class="block text-xs font-bold text-brand-text/70 uppercase tracking-wider mb-1">Headline</label>
-                <input type="text" id="article-title" required placeholder="e.g., The Zero-Sum Game of AI Regulation" class="w-full px-4 py-3 bg-brand-bg border border-brand-border rounded-sm focus:outline-none focus:border-brand-accent text-white font-serif text-lg">
-            </div>
-
-            <!-- Author & Credentials Row -->
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-                <div>
-                    <label class="block text-xs font-bold text-brand-text/70 uppercase tracking-wider mb-1">Author Name</label>
-                    <input type="text" id="article-author" required placeholder="e.g., Clara Vance" class="w-full px-4 py-3 bg-brand-bg border border-brand-border rounded-sm focus:outline-none focus:border-brand-accent text-white text-sm">
-                </div>
-                <div>
-                    <label class="block text-xs font-bold text-brand-text/70 uppercase tracking-wider mb-1">Author Credentials / Desk</label>
-                    <input type="text" id="article-role" placeholder="e.g., LL.M. Candidate, Brussels Desk" class="w-full px-4 py-3 bg-brand-bg border border-brand-border rounded-sm focus:outline-none focus:border-brand-accent text-white text-sm">
-                </div>
-                <div>
-                    <label class="block text-xs font-bold text-brand-text/70 uppercase tracking-wider mb-1">Estimated Read Time</label>
-                    <input type="text" id="article-readtime" placeholder="e.g., 6 Min Read" class="w-full px-4 py-3 bg-brand-bg border border-brand-border rounded-sm focus:outline-none focus:border-brand-accent text-white text-sm">
-                </div>
-            </div>
-            
-            <!-- Category & Region Row -->
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <div>
-                    <label class="block text-xs font-bold text-brand-text/70 uppercase tracking-wider mb-1">Topic Category</label>
-                    <select id="article-topic" required class="w-full px-4 py-3 bg-brand-bg border border-brand-border rounded-sm focus:outline-none focus:border-brand-accent text-white appearance-none">
-                        <option value="Law">Law</option>
-                        <option value="Tech">Tech</option>
-                        <option value="Politics">Politics</option>
-                        <option value="Economy">Economy</option>
-                    </select>
-                </div>
-                <div>
-                    <label class="block text-xs font-bold text-brand-text/70 uppercase tracking-wider mb-1">Region Category</label>
-                    <select id="article-region" class="w-full px-4 py-3 bg-brand-bg border border-brand-border rounded-sm focus:outline-none focus:border-brand-accent text-white appearance-none">
-                        <option value="">Global / None</option>
-                        <option value="EU">EU</option>
-                        <option value="UK">UK</option>
-                        <option value="USA">USA</option>
-                        <option value="ASIA">ASIA</option>
-                    </select>
-                </div>
-            </div>
-
-            <div>
-                <label class="block text-xs font-bold text-brand-text/70 uppercase tracking-wider mb-1">Cover Image URL</label>
-                <input type="url" id="article-image" placeholder="https://images.unsplash.com/..." class="w-full px-4 py-3 bg-brand-bg border border-brand-border rounded-sm focus:outline-none focus:border-brand-accent text-white text-sm">
-            </div>
-
-            <div>
-                <label class="block text-xs font-bold text-brand-text/70 uppercase tracking-wider mb-1">Article Content</label>
-                <textarea id="article-content" required rows="12" placeholder="Write your analysis here. Separate paragraphs by hitting 'Enter' twice. Start a paragraph with '>' to create a styled pull-quote." class="w-full px-4 py-3 bg-brand-bg border border-brand-border rounded-sm focus:outline-none focus:border-brand-accent text-white font-serif leading-relaxed"></textarea>
-            </div>
-
-            <button type="submit" id="publish-btn" class="w-full bg-brand-accent hover:bg-red-700 text-white font-bold uppercase tracking-wider py-5 rounded-sm transition-colors text-lg">
-                Publish to Live Site
+        <!-- CMS Navigation Tabs -->
+        <div class="flex flex-wrap gap-2 mb-8 border-b border-brand-border pb-4">
+            <button data-tab="tab-articles" class="cms-tab-btn bg-brand-accent text-white text-xs font-black uppercase tracking-widest px-5 py-3 rounded-sm transition-colors">
+                1. Dockets &amp; Articles
             </button>
-            <p id="publish-success" class="text-green-500 text-sm font-bold text-center hidden mt-4 uppercase tracking-widest">Article Published Successfully!</p>
-        </form>
+            <button data-tab="tab-pages" class="cms-tab-btn bg-[#18181B] text-zinc-200 hover:text-white border border-brand-border text-xs font-black uppercase tracking-widest px-5 py-3 rounded-sm transition-colors">
+                2. Site Text &amp; Pages CMS
+            </button>
+            <button data-tab="tab-writers" class="cms-tab-btn bg-[#18181B] text-zinc-200 hover:text-white border border-brand-border text-xs font-black uppercase tracking-widest px-5 py-3 rounded-sm transition-colors">
+                3. Writers &amp; Team Directory
+            </button>
+        </div>
 
-        <!-- MANAGE / DELETE ARTICLES SECTION -->
-        <div class="mt-14 pt-8 border-t border-brand-border">
-            <div class="flex items-center justify-between mb-6">
-                <div>
-                    <h3 class="text-sm font-black uppercase tracking-widest text-white">Manage Published Dockets</h3>
-                    <p class="text-xs text-brand-text/50 mt-1">Articles published via Firebase can be permanently removed here.</p>
-                </div>
-                <button id="refresh-list-btn" class="text-xs font-bold uppercase tracking-widest text-brand-accent hover:text-white transition-colors">Refresh List</button>
+        <!-- ========================================== -->
+        <!-- TAB 1: PUBLISH & EDIT ARTICLES             -->
+        <!-- ========================================== -->
+        <div id="tab-articles" class="cms-tab-panel">
+            <div class="flex items-center justify-between mb-4">
+                <h3 id="editor-mode-title" class="text-sm font-black uppercase tracking-widest text-brand-accent">Publish New Brief</h3>
+                <button id="cancel-edit-btn" class="hidden text-xs font-bold uppercase tracking-widest text-zinc-200 hover:text-white border border-brand-border px-3 py-1 rounded-sm">
+                    Cancel Edit &amp; Start Fresh
+                </button>
             </div>
-            
-            <div id="manage-articles-list" class="space-y-3">
-                <p class="text-xs text-brand-text/50 italic">Loading published articles...</p>
+
+            <form id="publish-form" class="space-y-6 bg-[#18181B] p-6 border border-brand-border rounded-sm">
+                <input type="hidden" id="edit-article-id" value="">
+
+                <div>
+                    <label class="block text-xs font-bold text-zinc-100 uppercase tracking-wider mb-1">Headline</label>
+                    <input type="text" id="article-title" required placeholder="e.g., The Zero-Sum Game of AI Regulation" class="w-full px-4 py-3 bg-[#27272A] border border-brand-border rounded-sm focus:outline-none focus:border-brand-accent text-white font-serif text-lg">
+                </div>
+
+                <!-- Author, Credentials & LinkedIn Row -->
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div>
+                        <label class="block text-xs font-bold text-zinc-100 uppercase tracking-wider mb-1">Author Name</label>
+                        <input type="text" id="article-author" required placeholder="e.g., Clara Vance" class="w-full px-4 py-3 bg-[#27272A] border border-brand-border rounded-sm focus:outline-none focus:border-brand-accent text-white text-sm">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-bold text-zinc-100 uppercase tracking-wider mb-1">Author Credentials / Desk</label>
+                        <input type="text" id="article-role" placeholder="e.g., LL.M. Candidate, Brussels Desk" class="w-full px-4 py-3 bg-[#27272A] border border-brand-border rounded-sm focus:outline-none focus:border-brand-accent text-white text-sm">
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div>
+                        <label class="block text-xs font-bold text-zinc-100 uppercase tracking-wider mb-1">Author LinkedIn URL (Optional)</label>
+                        <input type="url" id="article-linkedin" placeholder="https://www.linkedin.com/in/username" class="w-full px-4 py-3 bg-[#27272A] border border-brand-border rounded-sm focus:outline-none focus:border-brand-accent text-white text-sm">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-bold text-zinc-100 uppercase tracking-wider mb-1">Estimated Read Time</label>
+                        <input type="text" id="article-readtime" placeholder="e.g., 6 Min Read" class="w-full px-4 py-3 bg-[#27272A] border border-brand-border rounded-sm focus:outline-none focus:border-brand-accent text-white text-sm">
+                    </div>
+                </div>
+                
+                <!-- Category & Region Row -->
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div>
+                        <label class="block text-xs font-bold text-zinc-100 uppercase tracking-wider mb-1">Topic Category</label>
+                        <select id="article-topic" required class="w-full px-4 py-3 bg-[#27272A] border border-brand-border rounded-sm focus:outline-none focus:border-brand-accent text-white">
+                            <option value="Law">Law</option>
+                            <option value="Tech">Tech</option>
+                            <option value="Politics">Politics</option>
+                            <option value="Economy">Economy</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block text-xs font-bold text-zinc-100 uppercase tracking-wider mb-1">Region Category</label>
+                        <select id="article-region" class="w-full px-4 py-3 bg-[#27272A] border border-brand-border rounded-sm focus:outline-none focus:border-brand-accent text-white">
+                            <option value="">Global / None</option>
+                            <option value="EU">EU</option>
+                            <option value="UK">UK</option>
+                            <option value="USA">USA</option>
+                            <option value="ASIA">ASIA</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div>
+                    <label class="block text-xs font-bold text-zinc-100 uppercase tracking-wider mb-1">Cover Image URL</label>
+                    <input type="url" id="article-image" placeholder="https://images.unsplash.com/..." class="w-full px-4 py-3 bg-[#27272A] border border-brand-border rounded-sm focus:outline-none focus:border-brand-accent text-white text-sm">
+                </div>
+
+                <div>
+                    <label class="block text-xs font-bold text-zinc-100 uppercase tracking-wider mb-1">Article Content</label>
+                    <textarea id="article-content" required rows="12" placeholder="Write your analysis here. Separate paragraphs by hitting 'Enter' twice. Start a paragraph with '>' to create a styled pull-quote." class="w-full px-4 py-3 bg-[#27272A] border border-brand-border rounded-sm focus:outline-none focus:border-brand-accent text-white font-serif leading-relaxed"></textarea>
+                </div>
+
+                <button type="submit" id="publish-btn" class="w-full bg-brand-accent hover:bg-red-700 text-white font-bold uppercase tracking-wider py-4 rounded-sm transition-colors text-base">
+                    Publish to Live Site
+                </button>
+                <p id="publish-success" class="text-green-400 text-sm font-bold text-center hidden mt-4 uppercase tracking-widest">Saved Successfully!</p>
+            </form>
+
+            <!-- MANAGE / EDIT / DELETE ARTICLES SECTION -->
+            <div class="mt-12 pt-8 border-t border-brand-border">
+                <div class="flex items-center justify-between mb-6">
+                    <div>
+                        <h3 class="text-sm font-black uppercase tracking-widest text-white">Manage &amp; Edit Published Dockets</h3>
+                        <p class="text-xs text-zinc-200 mt-1">Click "Edit" on any article to load it back into the editor above, or "Delete" to remove it.</p>
+                    </div>
+                    <button id="refresh-list-btn" class="text-xs font-bold uppercase tracking-widest text-brand-accent hover:text-white transition-colors">Refresh List</button>
+                </div>
+                
+                <div id="manage-articles-list" class="space-y-3">
+                    <p class="text-xs text-zinc-200 italic">Loading published articles...</p>
+                </div>
             </div>
         </div>
+
+        <!-- ========================================== -->
+        <!-- TAB 2: SITE TEXT & PAGES CMS               -->
+        <!-- ========================================== -->
+        <div id="tab-pages" class="cms-tab-panel hidden">
+            <form id="cms-pages-form" class="space-y-8">
+                
+                <!-- Section A: Visibility Toggles & Header -->
+                <div class="bg-[#18181B] p-6 border border-brand-border rounded-sm space-y-4">
+                    <h3 class="text-sm font-black uppercase tracking-widest text-brand-accent mb-2">1. Template Placeholders &amp; Branding</h3>
+                    
+                    <div class="flex flex-col sm:flex-row gap-6 pb-4 border-b border-brand-border">
+                        <label class="flex items-center space-x-3 cursor-pointer">
+                            <input type="checkbox" id="cms-hide-sample-articles" class="w-4 h-4 accent-red-600">
+                            <span class="text-xs font-bold text-white uppercase tracking-wider">Hide Built-in Sample Articles on Homepage</span>
+                        </label>
+                        <label class="flex items-center space-x-3 cursor-pointer">
+                            <input type="checkbox" id="cms-hide-sample-writers" class="w-4 h-4 accent-red-600">
+                            <span class="text-xs font-bold text-white uppercase tracking-wider">Hide Built-in Sample Writers on About Page</span>
+                        </label>
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4 pt-2">
+                        <div>
+                            <label class="block text-[11px] font-bold text-zinc-200 uppercase tracking-wider mb-1">Logo Top Line</label>
+                            <input type="text" id="cms-logo-line1" placeholder="Conflict" class="w-full px-3 py-2 bg-[#27272A] border border-brand-border rounded-sm text-white text-sm">
+                        </div>
+                        <div>
+                            <label class="block text-[11px] font-bold text-zinc-200 uppercase tracking-wider mb-1">Logo Bottom Line (Red)</label>
+                            <input type="text" id="cms-logo-line2" placeholder="Of Interest" class="w-full px-3 py-2 bg-[#27272A] border border-brand-border rounded-sm text-white text-sm">
+                        </div>
+                        <div>
+                            <label class="block text-[11px] font-bold text-zinc-200 uppercase tracking-wider mb-1">Homepage Feed Heading</label>
+                            <input type="text" id="cms-home-grid-heading" placeholder="Latest Dockets & Briefs" class="w-full px-3 py-2 bg-[#27272A] border border-brand-border rounded-sm text-white text-sm">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Section B: Featured Hero Article on Homepage -->
+                <div class="bg-[#18181B] p-6 border border-brand-border rounded-sm space-y-4">
+                    <h3 class="text-sm font-black uppercase tracking-widest text-brand-accent mb-1">2. Homepage Featured Banner Article</h3>
+                    <p class="text-xs text-zinc-300 mb-4">Customize the large hero article at the very top of your homepage.</p>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-[11px] font-bold text-zinc-200 uppercase tracking-wider mb-1">Featured Headline</label>
+                            <input type="text" id="cms-feat-title" class="w-full px-3 py-2 bg-[#27272A] border border-brand-border rounded-sm text-white text-sm">
+                        </div>
+                        <div>
+                            <label class="block text-[11px] font-bold text-zinc-200 uppercase tracking-wider mb-1">Featured Cover Image URL</label>
+                            <input type="url" id="cms-feat-image" class="w-full px-3 py-2 bg-[#27272A] border border-brand-border rounded-sm text-white text-sm">
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
+                        <div>
+                            <label class="block text-[11px] font-bold text-zinc-200 uppercase tracking-wider mb-1">Category Tag</label>
+                            <input type="text" id="cms-feat-category" placeholder="Tech • EU" class="w-full px-3 py-2 bg-[#27272A] border border-brand-border rounded-sm text-white text-sm">
+                        </div>
+                        <div>
+                            <label class="block text-[11px] font-bold text-zinc-200 uppercase tracking-wider mb-1">Read Time</label>
+                            <input type="text" id="cms-feat-readtime" placeholder="6 Min Read" class="w-full px-3 py-2 bg-[#27272A] border border-brand-border rounded-sm text-white text-sm">
+                        </div>
+                        <div>
+                            <label class="block text-[11px] font-bold text-zinc-200 uppercase tracking-wider mb-1">Author Name</label>
+                            <input type="text" id="cms-feat-author" class="w-full px-3 py-2 bg-[#27272A] border border-brand-border rounded-sm text-white text-sm">
+                        </div>
+                        <div>
+                            <label class="block text-[11px] font-bold text-zinc-200 uppercase tracking-wider mb-1">Author Credentials</label>
+                            <input type="text" id="cms-feat-role" class="w-full px-3 py-2 bg-[#27272A] border border-brand-border rounded-sm text-white text-sm">
+                        </div>
+                    </div>
+
+                    <div>
+                        <label class="block text-[11px] font-bold text-zinc-200 uppercase tracking-wider mb-1">Featured Summary Excerpt (Shown on Card)</label>
+                        <textarea id="cms-feat-excerpt" rows="2" class="w-full px-3 py-2 bg-[#27272A] border border-brand-border rounded-sm text-white text-sm"></textarea>
+                    </div>
+
+                    <div>
+                        <label class="block text-[11px] font-bold text-zinc-200 uppercase tracking-wider mb-1">Featured Full Article Text (Shown When Clicked)</label>
+                        <textarea id="cms-feat-content" rows="5" class="w-full px-3 py-2 bg-[#27272A] border border-brand-border rounded-sm text-white text-sm font-serif"></textarea>
+                    </div>
+                </div>
+
+                <!-- Section C: About Us Page Text -->
+                <div class="bg-[#18181B] p-6 border border-brand-border rounded-sm space-y-4">
+                    <h3 class="text-sm font-black uppercase tracking-widest text-brand-accent mb-1">3. "About Us" Page Text</h3>
+                    <p class="text-xs text-zinc-300 mb-4">Modify any heading, paragraph, quote, or pillar on your About page.</p>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-[11px] font-bold text-zinc-200 uppercase tracking-wider mb-1">Top Red Tagline</label>
+                            <input type="text" id="cms-about-tag" class="w-full px-3 py-2 bg-[#27272A] border border-brand-border rounded-sm text-white text-sm">
+                        </div>
+                        <div>
+                            <label class="block text-[11px] font-bold text-zinc-200 uppercase tracking-wider mb-1">Main Page Headline</label>
+                            <input type="text" id="cms-about-title" class="w-full px-3 py-2 bg-[#27272A] border border-brand-border rounded-sm text-white text-sm">
+                        </div>
+                    </div>
+
+                    <div>
+                        <label class="block text-[11px] font-bold text-zinc-200 uppercase tracking-wider mb-1">Opening Paragraph (With Drop-Cap)</label>
+                        <textarea id="cms-about-p1" rows="3" class="w-full px-3 py-2 bg-[#27272A] border border-brand-border rounded-sm text-white text-sm"></textarea>
+                    </div>
+
+                    <div>
+                        <label class="block text-[11px] font-bold text-zinc-200 uppercase tracking-wider mb-1">Second Paragraph</label>
+                        <textarea id="cms-about-p2" rows="3" class="w-full px-3 py-2 bg-[#27272A] border border-brand-border rounded-sm text-white text-sm"></textarea>
+                    </div>
+
+                    <div>
+                        <label class="block text-[11px] font-bold text-zinc-200 uppercase tracking-wider mb-1">Highlighted Blockquote</label>
+                        <textarea id="cms-about-quote" rows="2" class="w-full px-3 py-2 bg-[#27272A] border border-brand-border rounded-sm text-white text-sm"></textarea>
+                    </div>
+
+                    <!-- 3 Pillars -->
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4 pt-2">
+                        <div class="space-y-2">
+                            <label class="block text-[11px] font-bold text-zinc-200 uppercase tracking-wider">Pillar 1 Title &amp; Text</label>
+                            <input type="text" id="cms-pillar1-title" class="w-full px-3 py-2 bg-[#27272A] border border-brand-border rounded-sm text-white text-xs font-bold">
+                            <textarea id="cms-pillar1-desc" rows="2" class="w-full px-3 py-2 bg-[#27272A] border border-brand-border rounded-sm text-white text-xs"></textarea>
+                        </div>
+                        <div class="space-y-2">
+                            <label class="block text-[11px] font-bold text-zinc-200 uppercase tracking-wider">Pillar 2 Title &amp; Text</label>
+                            <input type="text" id="cms-pillar2-title" class="w-full px-3 py-2 bg-[#27272A] border border-brand-border rounded-sm text-white text-xs font-bold">
+                            <textarea id="cms-pillar2-desc" rows="2" class="w-full px-3 py-2 bg-[#27272A] border border-brand-border rounded-sm text-white text-xs"></textarea>
+                        </div>
+                        <div class="space-y-2">
+                            <label class="block text-[11px] font-bold text-zinc-200 uppercase tracking-wider">Pillar 3 Title &amp; Text</label>
+                            <input type="text" id="cms-pillar3-title" class="w-full px-3 py-2 bg-[#27272A] border border-brand-border rounded-sm text-white text-xs font-bold">
+                            <textarea id="cms-pillar3-desc" rows="2" class="w-full px-3 py-2 bg-[#27272A] border border-brand-border rounded-sm text-white text-xs"></textarea>
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 pt-2">
+                        <div>
+                            <label class="block text-[11px] font-bold text-zinc-200 uppercase tracking-wider mb-1">Writers Directory Heading</label>
+                            <input type="text" id="cms-writers-heading" class="w-full px-3 py-2 bg-[#27272A] border border-brand-border rounded-sm text-white text-sm">
+                        </div>
+                        <div>
+                            <label class="block text-[11px] font-bold text-zinc-200 uppercase tracking-wider mb-1">Writers Directory Subheading</label>
+                            <input type="text" id="cms-writers-sub" class="w-full px-3 py-2 bg-[#27272A] border border-brand-border rounded-sm text-white text-sm">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Section D: Subscribe & Footer Text -->
+                <div class="bg-[#18181B] p-6 border border-brand-border rounded-sm space-y-4">
+                    <h3 class="text-sm font-black uppercase tracking-widest text-brand-accent mb-1">4. Subscribe Box &amp; Footer Text</h3>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-[11px] font-bold text-zinc-200 uppercase tracking-wider mb-1">Subscribe Section Heading</label>
+                            <input type="text" id="cms-sub-title" class="w-full px-3 py-2 bg-[#27272A] border border-brand-border rounded-sm text-white text-sm">
+                        </div>
+                        <div>
+                            <label class="block text-[11px] font-bold text-zinc-200 uppercase tracking-wider mb-1">Subscribe Section Description</label>
+                            <input type="text" id="cms-sub-desc" class="w-full px-3 py-2 bg-[#27272A] border border-brand-border rounded-sm text-white text-sm">
+                        </div>
+                        <div>
+                            <label class="block text-[11px] font-bold text-zinc-200 uppercase tracking-wider mb-1">Footer Mission Blur</label>
+                            <textarea id="cms-footer-desc" rows="2" class="w-full px-3 py-2 bg-[#27272A] border border-brand-border rounded-sm text-white text-xs"></textarea>
+                        </div>
+                        <div>
+                            <label class="block text-[11px] font-bold text-zinc-200 uppercase tracking-wider mb-1">Footer Copyright Line</label>
+                            <input type="text" id="cms-footer-copy" class="w-full px-3 py-2 bg-[#27272A] border border-brand-border rounded-sm text-white text-xs">
+                        </div>
+                    </div>
+                </div>
+
+                <button type="submit" id="save-cms-btn" class="w-full bg-brand-accent hover:bg-red-700 text-white font-bold uppercase tracking-wider py-4 rounded-sm transition-colors text-base">
+                    Save All Page &amp; Site Text Changes
+                </button>
+                <p id="cms-save-success" class="text-green-400 text-sm font-bold text-center hidden mt-3 uppercase tracking-widest">All Site Text Changes Live!</p>
+            </form>
+        </div>
+
+        <!-- ========================================== -->
+        <!-- TAB 3: WRITERS & TEAM DIRECTORY MANAGER    -->
+        <!-- ========================================== -->
+        <div id="tab-writers" class="cms-tab-panel hidden">
+            <div class="bg-[#18181B] p-6 border border-brand-border rounded-sm mb-8">
+                <h3 id="writer-form-title" class="text-sm font-black uppercase tracking-widest text-brand-accent mb-4">Add / Update Writer Profile on "About Us" Page</h3>
+                
+                <form id="writer-form" class="space-y-4">
+                    <input type="hidden" id="edit-writer-id" value="">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-xs font-bold text-zinc-100 uppercase tracking-wider mb-1">Full Name</label>
+                            <input type="text" id="writer-name" required placeholder="e.g., Sofia Lindqvist" class="w-full px-3 py-2.5 bg-[#27272A] border border-brand-border rounded-sm text-white text-sm">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-bold text-zinc-100 uppercase tracking-wider mb-1">Credentials &amp; Editorial Desk</label>
+                            <input type="text" id="writer-role" required placeholder="e.g., LL.M. International Law • Stockholm Desk" class="w-full px-3 py-2.5 bg-[#27272A] border border-brand-border rounded-sm text-white text-sm">
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-xs font-bold text-zinc-100 uppercase tracking-wider mb-1">Focus Area / Specialty Tag</label>
+                            <input type="text" id="writer-specialty" placeholder="e.g., EU Competition & Tech Law" class="w-full px-3 py-2.5 bg-[#27272A] border border-brand-border rounded-sm text-white text-sm">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-bold text-zinc-100 uppercase tracking-wider mb-1">LinkedIn Profile URL</label>
+                            <input type="url" id="writer-linkedin" placeholder="https://www.linkedin.com/in/..." class="w-full px-3 py-2.5 bg-[#27272A] border border-brand-border rounded-sm text-white text-sm">
+                        </div>
+                    </div>
+
+                    <div>
+                        <label class="block text-xs font-bold text-zinc-100 uppercase tracking-wider mb-1">Short Academic &amp; Policy Bio</label>
+                        <textarea id="writer-bio" required rows="3" placeholder="2-3 sentences detailing their research focus, university background, and regional desk." class="w-full px-3 py-2.5 bg-[#27272A] border border-brand-border rounded-sm text-white text-sm"></textarea>
+                    </div>
+
+                    <div class="flex gap-3">
+                        <button type="submit" id="save-writer-btn" class="flex-grow bg-brand-accent hover:bg-red-700 text-white font-bold uppercase tracking-wider py-3.5 rounded-sm transition-colors text-xs">
+                            Save Writer to Directory
+                        </button>
+                        <button type="button" id="cancel-writer-edit" class="hidden bg-zinc-800 text-white font-bold uppercase tracking-wider px-5 py-3.5 rounded-sm text-xs">
+                            Cancel
+                        </button>
+                    </div>
+                </form>
+            </div>
+
+            <div>
+                <h3 class="text-sm font-black uppercase tracking-widest text-white mb-4">Current Custom Directory Roster</h3>
+                <div id="manage-writers-list" class="space-y-3">
+                    <p class="text-xs text-zinc-200 italic">Loading writers...</p>
+                </div>
+            </div>
+        </div>
+
     </div>
 
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
         import { getAuth, signInWithEmailAndPassword, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
-        import { getFirestore, collection, addDoc, getDocs, deleteDoc, doc, query, orderBy, serverTimestamp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+        import { getFirestore, collection, addDoc, setDoc, getDoc, getDocs, updateDoc, deleteDoc, doc, query, orderBy, serverTimestamp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
 
         // YOUR FIREBASE CONFIGURATION
         const firebaseConfig = {
@@ -157,6 +424,26 @@
         const auth = getAuth(app);
         const db = getFirestore(app);
 
+        // Tab Switching Logic
+        const tabBtns = document.querySelectorAll('.cms-tab-btn');
+        const tabPanels = document.querySelectorAll('.cms-tab-panel');
+        tabBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                tabBtns.forEach(b => {
+                    b.classList.remove('bg-brand-accent', 'text-white');
+                    b.classList.add('bg-[#18181B]', 'text-zinc-200');
+                });
+                btn.classList.add('bg-brand-accent', 'text-white');
+                btn.classList.remove('bg-[#18181B]', 'text-zinc-200');
+
+                const target = btn.getAttribute('data-tab');
+                tabPanels.forEach(panel => {
+                    if (panel.id === target) panel.classList.remove('hidden');
+                    else panel.classList.add('hidden');
+                });
+            });
+        });
+
         const loginView = document.getElementById('login-view');
         const dashboardView = document.getElementById('dashboard-view');
         const loginForm = document.getElementById('login-form');
@@ -166,44 +453,80 @@
         const publishSuccess = document.getElementById('publish-success');
         const publishBtn = document.getElementById('publish-btn');
         const manageList = document.getElementById('manage-articles-list');
+        const cancelEditBtn = document.getElementById('cancel-edit-btn');
 
-        // Load Published Articles for Deletion/Management
+        // ==========================================
+        // 1. ARTICLES MANAGEMENT (CREATE, EDIT, DELETE)
+        // ==========================================
+        function resetArticleEditor() {
+            publishForm.reset();
+            document.getElementById('edit-article-id').value = '';
+            document.getElementById('editor-mode-title').textContent = 'Publish New Brief';
+            publishBtn.textContent = 'Publish to Live Site';
+            cancelEditBtn.classList.add('hidden');
+        }
+
+        cancelEditBtn.addEventListener('click', resetArticleEditor);
+
         async function loadManageArticles() {
             if (!auth.currentUser) return;
-            manageList.innerHTML = '<p class="text-xs text-brand-text/50 italic">Loading published articles...</p>';
+            manageList.innerHTML = '<p class="text-xs text-zinc-200 italic">Loading published articles...</p>';
             try {
                 const q = query(collection(db, 'articles'), orderBy('createdAt', 'desc'));
                 const snapshot = await getDocs(q);
                 manageList.innerHTML = '';
 
                 if (snapshot.empty) {
-                    manageList.innerHTML = '<p class="text-xs text-brand-text/50 italic">No custom articles published yet.</p>';
+                    manageList.innerHTML = '<p class="text-xs text-zinc-200 italic">No custom articles published yet.</p>';
                     return;
                 }
 
                 snapshot.forEach(documentSnapshot => {
                     const data = documentSnapshot.data();
                     const item = document.createElement('div');
-                    item.className = "flex items-center justify-between p-4 bg-brand-bg border border-brand-border rounded-sm";
+                    item.className = "flex flex-col sm:flex-row sm:items-center justify-between gap-3 p-4 bg-[#18181B] border border-brand-border rounded-sm";
                     item.innerHTML = `
                         <div class="pr-4">
                             <h4 class="font-serif font-bold text-white text-sm">${data.title}</h4>
-                            <p class="text-[11px] text-brand-text/50 uppercase tracking-wider mt-1">
-                                By <span class="text-brand-text/80">${data.author || 'Editorial Desk'}</span> &bull; ${data.category}
+                            <p class="text-[11px] text-zinc-200 uppercase tracking-wider mt-1">
+                                By <span class="text-white">${data.author || 'Editorial Desk'}</span> &bull; ${data.category}
                             </p>
                         </div>
-                        <button data-id="${documentSnapshot.id}" class="delete-article-btn bg-red-950/60 hover:bg-brand-accent text-red-300 hover:text-white border border-red-800/60 text-[10px] font-bold uppercase tracking-widest px-3 py-2 rounded-sm transition-colors shrink-0">
-                            Delete
-                        </button>
+                        <div class="flex items-center space-x-2 shrink-0">
+                            <button data-id="${documentSnapshot.id}" class="edit-article-btn bg-zinc-800 hover:bg-zinc-700 text-white border border-brand-border text-[10px] font-bold uppercase tracking-widest px-3 py-2 rounded-sm transition-colors">
+                                Edit Text
+                            </button>
+                            <button data-id="${documentSnapshot.id}" class="delete-article-btn bg-red-950/60 hover:bg-brand-accent text-red-200 hover:text-white border border-red-800/60 text-[10px] font-bold uppercase tracking-widest px-3 py-2 rounded-sm transition-colors">
+                                Delete
+                            </button>
+                        </div>
                     `;
-                    manageList.appendChild(item);
-                });
 
-                // Attach Delete Event Listeners
-                document.querySelectorAll('.delete-article-btn').forEach(btn => {
-                    btn.addEventListener('click', async (e) => {
+                    // Edit Button Handler
+                    item.querySelector('.edit-article-btn').addEventListener('click', () => {
+                        document.getElementById('edit-article-id').value = documentSnapshot.id;
+                        document.getElementById('article-title').value = data.title || '';
+                        document.getElementById('article-author').value = data.author || '';
+                        document.getElementById('article-role').value = data.authorRole || '';
+                        document.getElementById('article-linkedin').value = data.authorLinkedin || '';
+                        document.getElementById('article-readtime').value = data.readTime || '';
+                        document.getElementById('article-image').value = data.imageUrl || '';
+                        document.getElementById('article-content').value = data.content || '';
+
+                        const parts = (data.category || 'Law').split('•').map(s => s.trim());
+                        document.getElementById('article-topic').value = parts[0] || 'Law';
+                        document.getElementById('article-region').value = parts[1] || '';
+
+                        document.getElementById('editor-mode-title').textContent = `Editing Article: "${data.title}"`;
+                        publishBtn.textContent = 'Update & Save Changes';
+                        cancelEditBtn.classList.remove('hidden');
+                        window.scrollTo({ top: 0, behavior: 'smooth' });
+                    });
+
+                    // Delete Button Handler
+                    item.querySelector('.delete-article-btn').addEventListener('click', async (e) => {
                         const id = e.currentTarget.getAttribute('data-id');
-                        if (confirm("Are you sure you want to permanently delete this article from the live website?")) {
+                        if (confirm("Are you sure you want to permanently delete this article?")) {
                             e.currentTarget.textContent = "Deleting...";
                             e.currentTarget.disabled = true;
                             try {
@@ -216,6 +539,8 @@
                             }
                         }
                     });
+
+                    manageList.appendChild(item);
                 });
             } catch (err) {
                 manageList.innerHTML = `<p class="text-xs text-brand-accent">Error loading list: ${err.message}</p>`;
@@ -224,25 +549,304 @@
 
         document.getElementById('refresh-list-btn').addEventListener('click', loadManageArticles);
 
-        // Check if already logged in
+        publishForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            if (!auth.currentUser) return;
+
+            publishBtn.textContent = "Saving...";
+            publishBtn.disabled = true;
+
+            const editId = document.getElementById('edit-article-id').value;
+            const topic = document.getElementById('article-topic').value;
+            const region = document.getElementById('article-region').value;
+            const payload = {
+                title: document.getElementById('article-title').value,
+                author: document.getElementById('article-author').value.trim() || "Editorial Desk",
+                authorRole: document.getElementById('article-role').value.trim() || "Verified Academic & Policy Analysis",
+                authorLinkedin: document.getElementById('article-linkedin').value.trim() || "",
+                readTime: document.getElementById('article-readtime').value.trim() || "5 Min Read",
+                category: region ? `${topic} • ${region}` : topic,
+                imageUrl: document.getElementById('article-image').value || "https://placehold.co/1200x800/27272A/DC2626?text=Conflict+Of+Interest",
+                content: document.getElementById('article-content').value
+            };
+
+            try {
+                if (editId) {
+                    await updateDoc(doc(db, 'articles', editId), payload);
+                } else {
+                    payload.createdAt = serverTimestamp();
+                    await addDoc(collection(db, 'articles'), payload);
+                }
+                publishSuccess.classList.remove('hidden');
+                resetArticleEditor();
+                loadManageArticles();
+                setTimeout(() => publishSuccess.classList.add('hidden'), 4000);
+            } catch (error) {
+                alert("Error saving article: " + error.message);
+            } finally {
+                publishBtn.disabled = false;
+                if (!document.getElementById('edit-article-id').value) {
+                    publishBtn.textContent = "Publish to Live Site";
+                }
+            }
+        });
+
+        // ==========================================
+        // 2. SITE TEXT & PAGES CMS
+        // ==========================================
+        const cmsDefaults = {
+            logoLine1: "Conflict",
+            logoLine2: "Of Interest",
+            homeGridHeading: "Latest Dockets & Briefs",
+            featTitle: "The Brussels Effect: How EU AI Regulation Shapes Silicon Valley",
+            featImage: "https://images.unsplash.com/photo-1541872703-74c5e44368f9?auto=format&fit=crop&w=1200&q=80",
+            featCategory: "Tech • EU",
+            featReadTime: "6 Min Read",
+            featAuthor: "Elena Rostova",
+            featRole: "LL.M. European Law • Brussels Desk",
+            featExcerpt: "An examination of extraterritorial legal frameworks and why American foundation models are being forced to adapt to European compliance architecture.",
+            featContent: "The regulatory apparatus of the European Union has long operated as the de facto global standard-bearer for digital rights and corporate accountability. With the formal implementation of the Artificial Intelligence Act, Brussels is once again testing the limits of its extraterritorial reach.\n\nFor technology giants headquartered in California, compliance is not merely a regional cost of doing business—it is an architectural mandate. Engineering teams rarely build fractured codebases for separate jurisdictions when the underlying infrastructure relies on unified foundation models.\n\n> We are not regulating technology; we are establishing the constitutional parameters for algorithmic governance in the twenty-first century.\n\nHowever, this regulatory ambition creates an immediate friction with domestic innovation policy. Startups across Berlin, Paris, and Amsterdam warn that stringent compliance tiers disproportionately favor entrenched American incumbents who possess the legal capital to absorb regulatory shocks.",
+            aboutTag: "Our Mandate & Structure",
+            aboutTitle: "Uncompromised Analysis. Zero Commercial Bias.",
+            aboutP1: "Conflict of Interest is an independent, non-profit digital publication dedicated to rigorous analysis at the intersection of law, technology, politics, and global economics. In an era where media ecosystems are increasingly captured by corporate sponsorship and algorithmic outrage, we operate on a radically different foundational premise: expertise over clicks.",
+            aboutP2: "Our newsroom is uniquely structured as an international academic and policy collective. Every brief, docket analysis, and essay published on this platform is authored by advanced university students, legal researchers, and credentialed graduates holding degrees directly within the fields they cover. From antitrust law in Washington to regulatory frameworks in Brussels and supply chain economics in East Asia, our contributors write from the frontlines of scholarly research.",
+            aboutQuote: "\"True objectivity requires structural independence. As a non-profit initiative, we answer to neither shareholders nor political action committees—only to the evidentiary standard of our research.\"",
+            pillar1Title: "100% Non-Profit",
+            pillar1Desc: "No paywalls, no venture capital mandates, and zero commercial advertising interference.",
+            pillar2Title: "Credentialed Contributors",
+            pillar2Desc: "Written exclusively by degree-holders and specialized university researchers in law, economics, and policy.",
+            pillar3Title: "Global Perspective",
+            pillar3Desc: "Decentralized editorial desks covering the EU, UK, USA, and Asia-Pacific jurisdictions.",
+            writersHeading: "Editorial Board & Contributors",
+            writersSub: "Connect directly with our researchers and degree-holding analysts via LinkedIn.",
+            subTitle: "Subscribe to the Docket",
+            subDesc: "Create a secure reader account to receive our weekly global briefings and unlock member-only policy dossiers.",
+            footerDesc: "An independent, non-profit journal run by students and degree-holding researchers worldwide. Dedicated to uncompromised analysis of law, tech, politics, and the economy.",
+            footerCopy: "© 2026 Conflict of Interest Non-Profit Collective. All rights reserved."
+        };
+
+        async function loadCmsSettingsIntoForm() {
+            try {
+                const snap = await getDoc(doc(db, 'site_settings', 'main'));
+                const data = snap.exists() ? { ...cmsDefaults, ...snap.data() } : cmsDefaults;
+
+                document.getElementById('cms-hide-sample-articles').checked = !!data.hideSampleArticles;
+                document.getElementById('cms-hide-sample-writers').checked = !!data.hideSampleWriters;
+
+                const mapIds = {
+                    'cms-logo-line1': 'logoLine1',
+                    'cms-logo-line2': 'logoLine2',
+                    'cms-home-grid-heading': 'homeGridHeading',
+                    'cms-feat-title': 'featTitle',
+                    'cms-feat-image': 'featImage',
+                    'cms-feat-category': 'featCategory',
+                    'cms-feat-readtime': 'featReadTime',
+                    'cms-feat-author': 'featAuthor',
+                    'cms-feat-role': 'featRole',
+                    'cms-feat-excerpt': 'featExcerpt',
+                    'cms-feat-content': 'featContent',
+                    'cms-about-tag': 'aboutTag',
+                    'cms-about-title': 'aboutTitle',
+                    'cms-about-p1': 'aboutP1',
+                    'cms-about-p2': 'aboutP2',
+                    'cms-about-quote': 'aboutQuote',
+                    'cms-pillar1-title': 'pillar1Title',
+                    'cms-pillar1-desc': 'pillar1Desc',
+                    'cms-pillar2-title': 'pillar2Title',
+                    'cms-pillar2-desc': 'pillar2Desc',
+                    'cms-pillar3-title': 'pillar3Title',
+                    'cms-pillar3-desc': 'pillar3Desc',
+                    'cms-writers-heading': 'writersHeading',
+                    'cms-writers-sub': 'writersSub',
+                    'cms-sub-title': 'subTitle',
+                    'cms-sub-desc': 'subDesc',
+                    'cms-footer-desc': 'footerDesc',
+                    'cms-footer-copy': 'footerCopy'
+                };
+
+                for (const [elId, key] of Object.entries(mapIds)) {
+                    const el = document.getElementById(elId);
+                    if (el) el.value = data[key] || '';
+                }
+            } catch (err) {
+                console.warn("Could not load CMS settings:", err.message);
+            }
+        }
+
+        document.getElementById('cms-pages-form').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const btn = document.getElementById('save-cms-btn');
+            const successMsg = document.getElementById('cms-save-success');
+            btn.textContent = "Saving Site Text...";
+            btn.disabled = true;
+
+            const payload = {
+                hideSampleArticles: document.getElementById('cms-hide-sample-articles').checked,
+                hideSampleWriters: document.getElementById('cms-hide-sample-writers').checked,
+                logoLine1: document.getElementById('cms-logo-line1').value,
+                logoLine2: document.getElementById('cms-logo-line2').value,
+                homeGridHeading: document.getElementById('cms-home-grid-heading').value,
+                featTitle: document.getElementById('cms-feat-title').value,
+                featImage: document.getElementById('cms-feat-image').value,
+                featCategory: document.getElementById('cms-feat-category').value,
+                featReadTime: document.getElementById('cms-feat-readtime').value,
+                featAuthor: document.getElementById('cms-feat-author').value,
+                featRole: document.getElementById('cms-feat-role').value,
+                featExcerpt: document.getElementById('cms-feat-excerpt').value,
+                featContent: document.getElementById('cms-feat-content').value,
+                aboutTag: document.getElementById('cms-about-tag').value,
+                aboutTitle: document.getElementById('cms-about-title').value,
+                aboutP1: document.getElementById('cms-about-p1').value,
+                aboutP2: document.getElementById('cms-about-p2').value,
+                aboutQuote: document.getElementById('cms-about-quote').value,
+                pillar1Title: document.getElementById('cms-pillar1-title').value,
+                pillar1Desc: document.getElementById('cms-pillar1-desc').value,
+                pillar2Title: document.getElementById('cms-pillar2-title').value,
+                pillar2Desc: document.getElementById('cms-pillar2-desc').value,
+                pillar3Title: document.getElementById('cms-pillar3-title').value,
+                pillar3Desc: document.getElementById('cms-pillar3-desc').value,
+                writersHeading: document.getElementById('cms-writers-heading').value,
+                writersSub: document.getElementById('cms-writers-sub').value,
+                subTitle: document.getElementById('cms-sub-title').value,
+                subDesc: document.getElementById('cms-sub-desc').value,
+                footerDesc: document.getElementById('cms-footer-desc').value,
+                footerCopy: document.getElementById('cms-footer-copy').value,
+                updatedAt: serverTimestamp()
+            };
+
+            try {
+                await setDoc(doc(db, 'site_settings', 'main'), payload, { merge: true });
+                successMsg.classList.remove('hidden');
+                setTimeout(() => successMsg.classList.add('hidden'), 4000);
+            } catch (err) {
+                alert("Error saving site settings (Check that you updated your Firebase Rules!): " + err.message);
+            } finally {
+                btn.textContent = "Save All Page & Site Text Changes";
+                btn.disabled = false;
+            }
+        });
+
+        // ==========================================
+        // 3. WRITERS DIRECTORY MANAGER
+        // ==========================================
+        const writerForm = document.getElementById('writer-form');
+        const writersListEl = document.getElementById('manage-writers-list');
+        const cancelWriterBtn = document.getElementById('cancel-writer-edit');
+
+        function resetWriterForm() {
+            writerForm.reset();
+            document.getElementById('edit-writer-id').value = '';
+            document.getElementById('writer-form-title').textContent = 'Add / Update Writer Profile on "About Us" Page';
+            document.getElementById('save-writer-btn').textContent = 'Save Writer to Directory';
+            cancelWriterBtn.classList.add('hidden');
+        }
+
+        cancelWriterBtn.addEventListener('click', resetWriterForm);
+
+        async function loadManageWriters() {
+            if (!auth.currentUser) return;
+            writersListEl.innerHTML = '<p class="text-xs text-zinc-200 italic">Loading writers...</p>';
+            try {
+                const snap = await getDocs(collection(db, 'writers'));
+                writersListEl.innerHTML = '';
+                if (snap.empty) {
+                    writersListEl.innerHTML = '<p class="text-xs text-zinc-200 italic">No custom writer profiles added yet. Add your first team member above!</p>';
+                    return;
+                }
+
+                snap.forEach(docSnap => {
+                    const w = docSnap.data();
+                    const row = document.createElement('div');
+                    row.className = "flex flex-col sm:flex-row sm:items-center justify-between gap-3 p-4 bg-[#18181B] border border-brand-border rounded-sm";
+                    row.innerHTML = `
+                        <div>
+                            <h4 class="font-serif font-bold text-white text-sm">${w.name}</h4>
+                            <p class="text-[11px] text-brand-accent uppercase tracking-widest font-bold">${w.role}</p>
+                            <p class="text-xs text-zinc-200 mt-1">${w.bio}</p>
+                        </div>
+                        <div class="flex items-center space-x-2 shrink-0">
+                            <button class="edit-writer-btn bg-zinc-800 hover:bg-zinc-700 text-white border border-brand-border text-[10px] font-bold uppercase tracking-widest px-3 py-2 rounded-sm">Edit</button>
+                            <button class="del-writer-btn bg-red-950/60 hover:bg-brand-accent text-red-200 hover:text-white border border-red-800/60 text-[10px] font-bold uppercase tracking-widest px-3 py-2 rounded-sm">Delete</button>
+                        </div>
+                    `;
+
+                    row.querySelector('.edit-writer-btn').addEventListener('click', () => {
+                        document.getElementById('edit-writer-id').value = docSnap.id;
+                        document.getElementById('writer-name').value = w.name || '';
+                        document.getElementById('writer-role').value = w.role || '';
+                        document.getElementById('writer-specialty').value = w.specialty || '';
+                        document.getElementById('writer-linkedin').value = w.linkedin || '';
+                        document.getElementById('writer-bio').value = w.bio || '';
+                        document.getElementById('writer-form-title').textContent = `Editing Profile: ${w.name}`;
+                        document.getElementById('save-writer-btn').textContent = 'Update Writer Profile';
+                        cancelWriterBtn.classList.remove('hidden');
+                        window.scrollTo({ top: 0, behavior: 'smooth' });
+                    });
+
+                    row.querySelector('.del-writer-btn').addEventListener('click', async () => {
+                        if (confirm(`Remove ${w.name} from the Writers Directory?`)) {
+                            await deleteDoc(doc(db, 'writers', docSnap.id));
+                            loadManageWriters();
+                        }
+                    });
+
+                    writersListEl.appendChild(row);
+                });
+            } catch (err) {
+                writersListEl.innerHTML = `<p class="text-xs text-brand-accent">Error loading writers: ${err.message}</p>`;
+            }
+        }
+
+        writerForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const btn = document.getElementById('save-writer-btn');
+            btn.textContent = "Saving...";
+            btn.disabled = true;
+
+            const editId = document.getElementById('edit-writer-id').value;
+            const payload = {
+                name: document.getElementById('writer-name').value.trim(),
+                role: document.getElementById('writer-role').value.trim(),
+                specialty: document.getElementById('writer-specialty').value.trim(),
+                linkedin: document.getElementById('writer-linkedin').value.trim(),
+                bio: document.getElementById('writer-bio').value.trim()
+            };
+
+            try {
+                if (editId) {
+                    await updateDoc(doc(db, 'writers', editId), payload);
+                } else {
+                    await addDoc(collection(db, 'writers'), payload);
+                }
+                resetWriterForm();
+                loadManageWriters();
+            } catch (err) {
+                alert("Error saving writer profile (Check your Firebase Rules!): " + err.message);
+            } finally {
+                btn.disabled = false;
+                btn.textContent = "Save Writer to Directory";
+            }
+        });
+
+        // Auth State Listener
         onAuthStateChanged(auth, (user) => {
             if (user) {
                 loginView.classList.add('hidden');
                 dashboardView.classList.remove('hidden');
                 loadManageArticles();
+                loadCmsSettingsIntoForm();
+                loadManageWriters();
             } else {
                 loginView.classList.remove('hidden');
                 dashboardView.classList.add('hidden');
             }
         });
 
-        // Real Email/Password Login
         loginForm.addEventListener('submit', async (e) => {
             e.preventDefault();
             const email = document.getElementById('admin-email').value;
             const password = document.getElementById('admin-password').value;
             loginBtn.textContent = "Authenticating...";
-            
             try {
                 await signInWithEmailAndPassword(auth, email, password);
                 loginError.classList.add('hidden');
@@ -254,53 +858,9 @@
             }
         });
 
-        // Logout
         document.getElementById('logout-btn').addEventListener('click', async () => {
             await signOut(auth);
             document.getElementById('admin-password').value = '';
-        });
-
-        // Publish to Database
-        publishForm.addEventListener('submit', async (e) => {
-            e.preventDefault();
-            if (!auth.currentUser) return;
-
-            publishBtn.textContent = "Publishing...";
-            publishBtn.disabled = true;
-
-            const title = document.getElementById('article-title').value;
-            const author = document.getElementById('article-author').value.trim() || "Editorial Desk";
-            const authorRole = document.getElementById('article-role').value.trim() || "Verified Academic & Policy Analysis";
-            const readTime = document.getElementById('article-readtime').value.trim() || "5 Min Read";
-            const topic = document.getElementById('article-topic').value;
-            const region = document.getElementById('article-region').value;
-            const image = document.getElementById('article-image').value || "https://placehold.co/1200x800/27272A/DC2626?text=Conflict+Of+Interest";
-            const content = document.getElementById('article-content').value;
-            const categories = region ? `${topic} • ${region}` : topic;
-
-            try {
-                await addDoc(collection(db, 'articles'), {
-                    title: title,
-                    author: author,
-                    authorRole: authorRole,
-                    category: categories,
-                    imageUrl: image,
-                    content: content,
-                    readTime: readTime,
-                    createdAt: serverTimestamp()
-                });
-                
-                publishSuccess.classList.remove('hidden');
-                publishForm.reset();
-                loadManageArticles();
-                setTimeout(() => publishSuccess.classList.add('hidden'), 4000);
-            } catch (error) {
-                alert("Error publishing: " + error.message);
-                console.error(error);
-            } finally {
-                publishBtn.textContent = "Publish to Live Site";
-                publishBtn.disabled = false;
-            }
         });
     </script>
 </body>
